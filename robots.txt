@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://universo-mamma.netlify.app/sitemap.xml
