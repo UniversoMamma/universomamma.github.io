@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="it" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Non Dimenticare Nulla</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Nunito:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rosa: '#E8A0A8',
+            beige: '#FDF8F3',
+            salvia: '#B5C9B7',
+            marrone: '#4A2E2A'
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            body: ['Nunito', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body { height: 100%; }
+    .check-item input[type="checkbox"]:checked + label { text-decoration: line-through; opacity: 0.6; }
+    .progress-bar { transition: width 0.5s ease; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ <script src="/_sdk/telemetry_sdk.js"></script></head>
+ <body class="h-full bg-beige font-body text-marrone overflow-auto">
+  <div class="w-full min-h-full pb-12"><!-- Header -->
+   <header class="text-center pt-10 pb-6 px-4">
+    <h1 id="main-title" class="font-display text-3xl md:text-4xl font-bold text-marrone mb-2">🌿 Non Dimenticare Nulla</h1>
+    <p id="subtitle" class="text-rosa font-medium text-lg italic">La checklist intelligente per future mamme e neo mamme.</p>
+   </header><!-- Intro + Progress -->
+   <div class="max-w-lg mx-auto px-5">
+    <p class="text-center text-sm text-marrone/70 mb-6">Un passo alla volta. Spunta le attività completate e tieni tutto sotto controllo.</p>
+    <div class="bg-white rounded-2xl p-5 shadow-sm mb-8">
+     <div class="flex justify-between items-center mb-2"><span class="text-sm font-semibold">Progresso completato</span> <span id="progress-percent" class="text-sm font-bold text-rosa">0%</span>
+     </div>
+     <div class="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+      <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-rosa to-salvia rounded-full" style="width:0%"></div>
+     </div>
+     <p id="progress-count" class="text-xs text-marrone/50 mt-2 text-center">0 di 30 completate</p>
+    </div><!-- Completion Message -->
+    <div id="completion-msg" class="hidden bg-white rounded-2xl p-6 shadow-sm mb-8 text-center border-2 border-salvia">
+     <p class="text-3xl mb-2">🎉</p>
+     <h2 class="font-display text-xl font-bold mb-2">Complimenti!</h2>
+     <p class="text-sm text-marrone/70">Hai completato tutte le verifiche principali.</p>
+     <p class="text-xs text-marrone/50 mt-2">Ricorda che requisiti, bonus e normative possono cambiare nel tempo.</p>
+    </div><!-- Section 1 -->
+    <section class="mb-8">
+     <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-rosa/20 rounded-full flex items-center justify-center text-sm">🤰</span> Gravidanza</h2>
+     <div class="bg-white rounded-2xl p-5 shadow-sm space-y-3" id="sec-gravidanza">
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c1" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c1" class="text-sm cursor-pointer">Ho attivato SPID o CIE</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c2" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c2" class="text-sm cursor-pointer">Ho controllato il mio ISEE</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c3" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c3" class="text-sm cursor-pointer">Ho raccolto i documenti principali</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c4" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c4" class="text-sm cursor-pointer">Mi sono informata sul congedo maternità</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c5" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c5" class="text-sm cursor-pointer">Ho verificato eventuali bonus disponibili</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c6" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c6" class="text-sm cursor-pointer">Ho annotato le domande da fare a INPS o CAF</label>
+      </div>
+     </div>
+    </section><!-- Section 2 -->
+    <section class="mb-8">
+     <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-salvia/30 rounded-full flex items-center justify-center text-sm">👶</span> Dopo la Nascita</h2>
+     <div class="bg-white rounded-2xl p-5 shadow-sm space-y-3">
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c7" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c7" class="text-sm cursor-pointer">Ho ottenuto il codice fiscale del bambino</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c8" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c8" class="text-sm cursor-pointer">Ho verificato l'Assegno Unico</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c9" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c9" class="text-sm cursor-pointer">Ho controllato eventuali bonus disponibili</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c10" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c10" class="text-sm cursor-pointer">Ho conservato i documenti importanti</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c11" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c11" class="text-sm cursor-pointer">Ho verificato i congedi disponibili</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c12" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c12" class="text-sm cursor-pointer">Ho controllato eventuali aiuti locali</label>
+      </div>
+     </div>
+    </section><!-- Section 3 -->
+    <section class="mb-8">
+     <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-rosa/20 rounded-full flex items-center justify-center text-sm">💰</span> Bonus da Controllare</h2>
+     <div class="bg-white rounded-2xl p-5 shadow-sm space-y-3">
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c13" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c13" class="text-sm cursor-pointer">Assegno Unico</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c14" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c14" class="text-sm cursor-pointer">Bonus Nido</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c15" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c15" class="text-sm cursor-pointer">Bonus Nuovi Nati</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c16" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c16" class="text-sm cursor-pointer">Bonus Mamme</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c17" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c17" class="text-sm cursor-pointer">Congedo Maternità</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c18" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c18" class="text-sm cursor-pointer">Congedo Parentale</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c19" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c19" class="text-sm cursor-pointer">Congedo Papà</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c20" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c20" class="text-sm cursor-pointer">Bonus Regionali</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c21" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c21" class="text-sm cursor-pointer">Aiuti Comunali</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c22" class="mt-1 w-5 h-5 accent-rosa rounded"><label for="c22" class="text-sm cursor-pointer">Agevolazioni per figli con disabilità</label>
+      </div>
+     </div>
+    </section><!-- Section 4 -->
+    <section class="mb-8">
+     <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-salvia/30 rounded-full flex items-center justify-center text-sm">📄</span> Documenti</h2>
+     <div class="bg-white rounded-2xl p-5 shadow-sm space-y-3">
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c23" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c23" class="text-sm cursor-pointer">SPID</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c24" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c24" class="text-sm cursor-pointer">Carta d'identità</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c25" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c25" class="text-sm cursor-pointer">Codice fiscale</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c26" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c26" class="text-sm cursor-pointer">Codice fiscale bambino</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c27" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c27" class="text-sm cursor-pointer">IBAN</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c28" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c28" class="text-sm cursor-pointer">ISEE</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c29" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c29" class="text-sm cursor-pointer">Documenti di lavoro</label>
+      </div>
+      <div class="check-item flex items-start gap-3">
+       <input type="checkbox" id="c30" class="mt-1 w-5 h-5 accent-salvia rounded"><label for="c30" class="text-sm cursor-pointer">Certificati utili</label>
+      </div>
+     </div>
+    </section><!-- Section 5 -->
+    <section class="mb-8">
+     <h2 class="font-display text-xl font-semibold mb-4 flex items-center gap-2"><span class="w-8 h-8 bg-rosa/20 rounded-full flex items-center justify-center text-sm">📝</span> Il Mio Piano d'Azione</h2>
+     <div class="bg-white rounded-2xl p-5 shadow-sm space-y-4">
+      <div><label for="todo" class="text-sm font-semibold block mb-1">Cose da fare:</label> <textarea id="todo" rows="3" class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-rosa/50 resize-y" placeholder="Scrivi qui..."></textarea>
+      </div>
+      <div><label for="questions" class="text-sm font-semibold block mb-1">Domande da fare:</label> <textarea id="questions" rows="3" class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-rosa/50 resize-y" placeholder="Scrivi qui..."></textarea>
+      </div>
+      <div><label for="notes" class="text-sm font-semibold block mb-1">Note personali:</label> <textarea id="notes" rows="3" class="w-full border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-rosa/50 resize-y" placeholder="Scrivi qui..."></textarea>
+      </div>
+     </div>
+    </section><!-- Buttons -->
+    <div class="flex flex-col sm:flex-row gap-3 mb-10 no-print"><button onclick="resetAll()" class="flex-1 bg-white border-2 border-marrone/20 text-marrone font-semibold py-3 px-6 rounded-xl hover:bg-marrone/5 transition flex items-center justify-center gap-2"> <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Ricomincia </button> <button onclick="window.print()" class="flex-1 bg-marrone text-white font-semibold py-3 px-6 rounded-xl hover:bg-marrone/90 transition flex items-center justify-center gap-2"> <i data-lucide="printer" class="w-4 h-4"></i> Stampa la checklist </button>
+    </div>
+   </div><!-- Footer -->
+   <footer class="text-center py-8 border-t border-marrone/10 px-4">
+    <p class="text-xs text-marrone/50">© Universo Mamma</p>
+    <p class="text-xs text-marrone/40">Tutti i diritti riservati.</p>
+    <p class="text-xs text-marrone/40">Contenuto informativo e orientativo.</p>
+   </footer>
+  </div>
+  <script>
+    const TOTAL = 30;
+    const STORAGE_KEY = 'nonDimenticareNulla';
+
+    function saveState() {
+      const state = { checkboxes: {}, textareas: {} };
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => { state.checkboxes[cb.id] = cb.checked; });
+      document.querySelectorAll('textarea').forEach(ta => { state.textareas[ta.id] = ta.value; });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function loadState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const state = JSON.parse(raw);
+      if (state.checkboxes) Object.entries(state.checkboxes).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.checked = val; });
+      if (state.textareas) Object.entries(state.textareas).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.value = val; });
+    }
+
+    function updateProgress() {
+      const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      const pct = Math.round((checked / TOTAL) * 100);
+      document.getElementById('progress-bar').style.width = pct + '%';
+      document.getElementById('progress-percent').textContent = pct + '%';
+      document.getElementById('progress-count').textContent = `${checked} di ${TOTAL} completate`;
+      document.getElementById('completion-msg').classList.toggle('hidden', checked < TOTAL);
+    }
+
+    function resetAll() {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('textarea').forEach(ta => ta.value = '');
+      localStorage.removeItem(STORAGE_KEY);
+      updateProgress();
+    }
+
+    // Init
+    loadState();
+    updateProgress();
+
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', () => { updateProgress(); saveState(); });
+    });
+    document.querySelectorAll('textarea').forEach(ta => {
+      ta.addEventListener('input', saveState);
+    });
+
+    lucide.createIcons();
+
+    // Element SDK
+    const defaultConfig = {
+      main_title: '🌿 Non Dimenticare Nulla',
+      subtitle: 'La checklist intelligente per future mamme e neo mamme.',
+      background_color: '#FDF8F3',
+      surface_color: '#FFFFFF',
+      text_color: '#4A2E2A',
+      primary_action: '#E8A0A8',
+      secondary_action: '#B5C9B7',
+      font_family: 'Playfair Display',
+      font_size: 16
+    };
+
+    function applyConfig(config) {
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+      document.body.style.backgroundColor = config.background_color || defaultConfig.background_color;
+      const font = config.font_family || defaultConfig.font_family;
+      document.querySelectorAll('.font-display').forEach(el => el.style.fontFamily = `${font}, serif`);
+      const size = config.font_size || defaultConfig.font_size;
+      document.querySelectorAll('h2').forEach(el => el.style.fontSize = `${size * 1.25}px`);
+      document.querySelectorAll('.text-sm').forEach(el => el.style.fontSize = `${size * 0.875}px`);
+    }
+
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => { applyConfig(config); },
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+          { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+          { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+          { get: () => config.primary_action || defaultConfig.primary_action, set: (v) => { config.primary_action = v; window.elementSdk.setConfig({ primary_action: v }); } },
+          { get: () => config.secondary_action || defaultConfig.secondary_action, set: (v) => { config.secondary_action = v; window.elementSdk.setConfig({ secondary_action: v }); } }
+        ],
+        borderables: [],
+        fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
+        fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['subtitle', config.subtitle || defaultConfig.subtitle]
+      ])
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a03cad271efb2761',t:'MTc4MDEzMjk2Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
