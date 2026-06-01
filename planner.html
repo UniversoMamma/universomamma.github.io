@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="it" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planner Bonus &amp; Documenti Mamma</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Nunito:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        crema: '#FDF8F3',
+        rosa: '#E8A0A8',
+        salvia: '#B5C9B7',
+        marrone: '#4A2E2A',
+        bianco: '#FFFDF9'
+      },
+      fontFamily: {
+        display: ['Playfair Display', 'serif'],
+        body: ['Nunito', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+  <style>
+html, body { height: 100%; margin: 0; }
+.app-wrapper { height: 100%; overflow-y: auto; }
+.checkbox-custom { width: 24px; height: 24px; accent-color: #B5C9B7; cursor: pointer; }
+.card-section { border-radius: 16px; }
+.field-input { border: 1.5px solid #E8A0A8; border-radius: 12px; padding: 10px 14px; width: 100%; font-family: 'Nunito', sans-serif; background: #FFFDF9; transition: border-color 0.2s; }
+.field-input:focus { outline: none; border-color: #B5C9B7; box-shadow: 0 0 0 3px rgba(181,201,183,0.2); }
+select.field-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234A2E2A' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+.progress-bar { height: 8px; border-radius: 4px; background: #FDF8F3; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #B5C9B7, #E8A0A8); border-radius: 4px; transition: width 0.4s ease; }
+.nav-btn { transition: all 0.2s; }
+.nav-btn.active { background: #E8A0A8; color: white; }
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media print { .no-print { display: none !important; } .app-wrapper { overflow: visible !important; } section { break-inside: avoid; } }
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #4A2E2A; color: white; padding: 12px 24px; border-radius: 12px; font-family: 'Nunito', sans-serif; z-index: 9999; animation: toastIn 0.3s ease; }
+@keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ <script src="/_sdk/telemetry_sdk.js"></script></head>
+ <body class="h-full bg-crema font-body text-marrone">
+  <div class="app-wrapper" id="app">
+   <!-- Global Progress Bar -->
+   <div class="no-print sticky top-0 z-50 bg-crema/95 backdrop-blur-sm border-b border-rosa/20 px-4 py-2">
+    <div class="max-w-2xl mx-auto">
+     <div class="flex items-center justify-between mb-1">
+      <span class="text-xs font-semibold text-marrone/70">Progresso generale</span> <span class="text-xs font-bold text-rosa" id="globalProgressText">0%</span>
+     </div>
+     <div class="progress-bar">
+      <div class="progress-fill" id="globalProgressBar" style="width:0%"></div>
+     </div>
+    </div>
+   </div><!-- Navigation -->
+   <nav class="no-print sticky top-[52px] z-40 bg-crema/95 backdrop-blur-sm px-2 py-2 overflow-x-auto">
+    <div class="flex gap-1.5 max-w-2xl mx-auto" id="navBar">
+     <button onclick="showSection('home')" class="nav-btn active px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Home</button> <button onclick="showSection('situazione')" class="nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Situazione</button> <button onclick="showSection('priorita')" class="nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Priorità</button> <button onclick="showSection('bonus')" class="nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Bonus</button> <button onclick="showSection('documenti')" class="nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Documenti</button> <button onclick="showSection('scadenze')" class="nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Scadenze</button> <button onclick="showSection('domande')" class="nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Domande</button> <button onclick="showSection('piano7')" class="nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Piano 7gg</button> <button onclick="showSection('riepilogo')" class="nav-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap">Riepilogo</button>
+    </div>
+   </nav>
+   <div class="max-w-2xl mx-auto px-4 pb-8">
+    <!-- Disclaimer -->
+    <div class="mt-4 bg-salvia/20 border border-salvia/40 rounded-xl p-3 text-xs text-marrone/80 leading-relaxed">
+     <strong>⚠️ Disclaimer:</strong> Questo planner è uno strumento informativo e organizzativo. Non sostituisce INPS, CAF, Patronati o consulenti professionali. Verifica sempre requisiti, importi e normative aggiornate.
+    </div><!-- HOME -->
+    <section id="sec-home" class="fade-in mt-6">
+     <div class="text-center mb-6">
+      <h1 class="font-display text-2xl md:text-3xl font-bold text-marrone mb-2" id="mainTitle">Planner Bonus &amp; Documenti Mamma</h1>
+      <p class="text-sm text-marrone/70" id="subtitleEl">Organizza bonus, documenti, scadenze e domande importanti senza sentirti sopraffatta.</p>
+     </div>
+     <div class="bg-bianco card-section p-6 shadow-sm border border-rosa/10 mb-6">
+      <h2 class="font-display text-xl font-semibold mb-2">Organizza tutto in un unico posto</h2>
+      <p class="text-sm text-marrone/70 mb-5">Bonus, documenti, scadenze e domande possono sembrare troppi. Questo planner ti aiuta a mettere ordine e capire cosa fare passo dopo passo.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+       <div class="bg-crema rounded-xl p-4 text-center border border-rosa/10">
+        <div class="text-2xl mb-1">
+         ✓
+        </div>
+        <p class="text-sm font-semibold">Cosa controllare</p>
+       </div>
+       <div class="bg-crema rounded-xl p-4 text-center border border-salvia/20">
+        <div class="text-2xl mb-1">
+         📋
+        </div>
+        <p class="text-sm font-semibold">Cosa preparare</p>
+       </div>
+       <div class="bg-crema rounded-xl p-4 text-center border border-rosa/10">
+        <div class="text-2xl mb-1">
+         ❓
+        </div>
+        <p class="text-sm font-semibold">Cosa chiedere</p>
+       </div>
+      </div><button onclick="showSection('situazione')" class="w-full bg-rosa hover:bg-rosa/90 text-white font-semibold py-3 rounded-xl transition">Inizia il planner</button>
+     </div>
+    </section><!-- SEZIONE 1 - SITUAZIONE -->
+    <section id="sec-situazione" class="fade-in mt-6 hidden">
+     <h2 class="font-display text-xl font-bold mb-1">Partiamo da te</h2>
+     <p class="text-sm text-marrone/60 mb-4">Questa sezione ti aiuta a capire quali informazioni avere sotto mano prima di controllare bonus e congedi.</p>
+     <div class="bg-bianco card-section p-5 shadow-sm border border-rosa/10 space-y-4">
+      <div>
+       <label class="text-xs font-semibold block mb-1">Sono:</label> <select class="field-input" data-save="sit_sono"><option value="">Seleziona...</option><option>In gravidanza</option><option>Neomamma</option><option>Mamma con figli piccoli</option></select>
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">Data presunta parto</label> <input type="date" class="field-input" data-save="sit_dpp">
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">Data nascita bambino</label> <input type="date" class="field-input" data-save="sit_nascita">
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">Numero figli</label> <input type="number" min="0" class="field-input" data-save="sit_figli" placeholder="Es: 1">
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">Età figlio più piccolo</label> <input type="text" class="field-input" data-save="sit_eta" placeholder="Es: 6 mesi">
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">Situazione lavorativa</label> <select class="field-input" data-save="sit_lavoro"><option value="">Seleziona...</option><option>Dipendente</option><option>Autonoma</option><option>Partita IVA</option><option>Gestione separata</option><option>Non lavoro</option><option>Altro</option></select>
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">ISEE aggiornato?</label> <select class="field-input" data-save="sit_isee"><option value="">Seleziona...</option><option>Sì</option><option>No</option><option>Non lo so</option></select>
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">Ho già SPID o CIE?</label> <select class="field-input" data-save="sit_spid"><option value="">Seleziona...</option><option>Sì</option><option>No</option></select>
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">Note importanti</label> <textarea class="field-input" rows="3" data-save="sit_note" placeholder="Aggiungi qui note utili..."></textarea>
+      </div>
+     </div><button onclick="showSection('priorita')" class="mt-4 w-full bg-salvia hover:bg-salvia/90 text-white font-semibold py-3 rounded-xl transition">Vai alle Priorità →</button>
+    </section><!-- SEZIONE 2 - PRIORITÀ -->
+    <section id="sec-priorita" class="fade-in mt-6 hidden">
+     <h2 class="font-display text-xl font-bold mb-1">Cosa controllare per prima</h2>
+     <div class="flex items-center gap-2 mb-4">
+      <div class="progress-bar flex-1">
+       <div class="progress-fill" id="prioritaBar" style="width:0%"></div>
+      </div><span class="text-xs font-bold text-rosa" id="prioritaPercent">0%</span>
+     </div>
+     <div class="space-y-4">
+      <div class="bg-bianco card-section p-4 shadow-sm border-l-4 border-rosa">
+       <h3 class="text-sm font-bold text-rosa mb-2">🔴 ALTA URGENZA</h3>
+       <div class="space-y-2" id="priorita-alta"></div>
+      </div>
+      <div class="bg-bianco card-section p-4 shadow-sm border-l-4 border-yellow-400">
+       <h3 class="text-sm font-bold text-yellow-600 mb-2">🟡 MEDIA URGENZA</h3>
+       <div class="space-y-2" id="priorita-media"></div>
+      </div>
+      <div class="bg-bianco card-section p-4 shadow-sm border-l-4 border-salvia">
+       <h3 class="text-sm font-bold text-salvia mb-2">🟢 BASSA URGENZA</h3>
+       <div class="space-y-2" id="priorita-bassa"></div>
+      </div>
+     </div><button onclick="showSection('bonus')" class="mt-4 w-full bg-salvia hover:bg-salvia/90 text-white font-semibold py-3 rounded-xl transition">Vai ai Bonus →</button>
+    </section><!-- SEZIONE 3 - BONUS -->
+    <section id="sec-bonus" class="fade-in mt-6 hidden">
+     <h2 class="font-display text-xl font-bold mb-4">Bonus e aiuti da controllare</h2>
+     <div class="space-y-3" id="bonusContainer"></div><button onclick="showSection('documenti')" class="mt-4 w-full bg-salvia hover:bg-salvia/90 text-white font-semibold py-3 rounded-xl transition">Vai ai Documenti →</button>
+    </section><!-- SEZIONE 4 - DOCUMENTI -->
+    <section id="sec-documenti" class="fade-in mt-6 hidden">
+     <h2 class="font-display text-xl font-bold mb-4">Documenti da avere pronti</h2>
+     <div class="space-y-4" id="documentiContainer"></div>
+     <div class="flex gap-2 mt-4">
+      <button onclick="markAllDocs(true)" class="flex-1 bg-salvia hover:bg-salvia/90 text-white font-semibold py-2.5 rounded-xl text-sm transition">✓ Segna tutto</button> <button onclick="window.print()" class="flex-1 bg-marrone hover:bg-marrone/90 text-white font-semibold py-2.5 rounded-xl text-sm transition">🖨 Stampa lista</button>
+     </div><button onclick="showSection('scadenze')" class="mt-3 w-full bg-rosa hover:bg-rosa/90 text-white font-semibold py-3 rounded-xl transition">Vai alle Scadenze →</button>
+    </section><!-- SEZIONE 5 - SCADENZE -->
+    <section id="sec-scadenze" class="fade-in mt-6 hidden">
+     <h2 class="font-display text-xl font-bold mb-2">Le mie scadenze importanti</h2>
+     <p class="text-xs text-marrone/60 mb-4">⚠️ Le scadenze possono cambiare. Verifica sempre sui canali ufficiali.</p>
+     <div class="space-y-3" id="scadenzeContainer"></div><button onclick="addScadenza()" class="mt-3 w-full border-2 border-dashed border-rosa/40 text-rosa font-semibold py-2.5 rounded-xl text-sm hover:bg-rosa/5 transition">+ Aggiungi scadenza</button> <button onclick="showSection('domande')" class="mt-3 w-full bg-salvia hover:bg-salvia/90 text-white font-semibold py-3 rounded-xl transition">Vai alle Domande →</button>
+    </section><!-- SEZIONE 6 - DOMANDE -->
+    <section id="sec-domande" class="fade-in mt-6 hidden">
+     <h2 class="font-display text-xl font-bold mb-4">Domande da non dimenticare</h2>
+     <div class="space-y-4" id="domandeContainer"></div>
+     <div class="bg-bianco card-section p-4 shadow-sm border border-rosa/10 mt-4">
+      <label class="text-sm font-semibold block mb-2">Le mie domande personali</label> <textarea class="field-input" rows="4" data-save="domande_personali" placeholder="Scrivi qui le tue domande..."></textarea>
+     </div><button onclick="showSection('piano7')" class="mt-4 w-full bg-salvia hover:bg-salvia/90 text-white font-semibold py-3 rounded-xl transition">Vai al Piano 7 Giorni →</button>
+    </section><!-- SEZIONE 7 - PIANO 7 GIORNI -->
+    <section id="sec-piano7" class="fade-in mt-6 hidden">
+     <h2 class="font-display text-xl font-bold mb-4">Cosa faccio questa settimana</h2>
+     <div class="space-y-3" id="piano7Container"></div><button onclick="showSection('riepilogo')" class="mt-4 w-full bg-rosa hover:bg-rosa/90 text-white font-semibold py-3 rounded-xl transition">Vai al Riepilogo →</button>
+    </section><!-- SEZIONE 8 - RIEPILOGO -->
+    <section id="sec-riepilogo" class="fade-in mt-6 hidden">
+     <h2 class="font-display text-xl font-bold mb-4">Il mio prossimo passo</h2>
+     <div class="bg-bianco card-section p-5 shadow-sm border border-rosa/10 mb-4">
+      <div class="grid grid-cols-2 gap-3 mb-4" id="riepilogoStats"></div>
+     </div>
+     <div class="bg-bianco card-section p-5 shadow-sm border border-rosa/10 space-y-4">
+      <div>
+       <label class="text-xs font-semibold block mb-1">Il primo passo che farò oggi è:</label> <textarea class="field-input" rows="2" data-save="riepilogo_primo" placeholder="Scrivi qui..."></textarea>
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">La cosa che devo verificare con urgenza è:</label> <textarea class="field-input" rows="2" data-save="riepilogo_urgenza" placeholder="Scrivi qui..."></textarea>
+      </div>
+      <div>
+       <label class="text-xs font-semibold block mb-1">Appuntamento / contatto da prendere:</label> <textarea class="field-input" rows="2" data-save="riepilogo_contatto" placeholder="Scrivi qui..."></textarea>
+      </div>
+     </div>
+    </section><!-- Action Buttons -->
+    <div class="no-print flex flex-wrap gap-2 mt-4 mb-6">
+     <button onclick="window.print()" class="flex-1 min-w-[120px] bg-marrone/10 hover:bg-marrone/20 text-marrone font-semibold py-2.5 rounded-xl text-sm transition">🖨 Stampa planner</button> <button onclick="downloadRiepilogo()" class="flex-1 min-w-[120px] bg-marrone/10 hover:bg-marrone/20 text-marrone font-semibold py-2.5 rounded-xl text-sm transition">📥 Scarica riepilogo</button> <button onclick="resetPlanner()" class="flex-1 min-w-[120px] bg-rosa/10 hover:bg-rosa/20 text-rosa font-semibold py-2.5 rounded-xl text-sm transition">🔄 Ricomincia</button>
+    </div><!-- Footer -->
+    <footer class="text-center text-xs text-marrone/50 py-6 border-t border-rosa/10">
+     <p>© Universo Mamma. Tutti i diritti riservati.</p>
+     <p>Uso personale. Vietata copia, distribuzione o rivendita non autorizzata.</p>
+    </footer>
+   </div>
+  </div>
+  <script>
+// Data definitions
+const prioritaAlta = ['Attivare SPID o CIE','Verificare ISEE aggiornato','Controllare Assegno Unico','Controllare eventuali scadenze vicine','Conservare documenti nascita o gravidanza','Verificare congedi se lavori'];
+const prioritaMedia = ['Controllare Bonus Nido','Controllare Bonus Mamme','Verificare bonus regionali','Verificare bonus comunali','Preparare domande per CAF o Patronato'];
+const prioritaBassa = ['Organizzare documenti in cartella','Salvare ricevute future','Annotare dubbi da chiarire','Pianificare controlli periodici'];
+
+const bonusList = ['Assegno Unico','Bonus Nido','Bonus Nuovi Nati','Bonus Mamme','Congedo Maternità','Congedo Parentale','Congedo Papà','Assegno Maternità Comune','Assegno Maternità Stato','Bonus regionali','Aiuti comunali','Agevolazioni figli con disabilità'];
+
+const documentiCategories = {
+  'Identità e Accesso': ['SPID','CIE','Carta identità','Codice fiscale mamma','Codice fiscale bambino','Tessera sanitaria'],
+  'Pagamenti e ISEE': ['IBAN','ISEE aggiornato','DSU','Documenti reddito se richiesti'],
+  'Gravidanza / Nascita': ['Certificato gravidanza','Data presunta parto','Certificato nascita','Documenti adozione/affido se presenti'],
+  'Lavoro': ['Contratto di lavoro','Buste paga','Comunicazioni datore di lavoro','Informazioni congedi già usati'],
+  'Nido / Spese': ['Iscrizione nido','Ricevute pagamento','Dati struttura','Documentazione assistenza domiciliare se utile'],
+  'Disabilità': ['Verbale disabilità','Legge 104 se presente','Documentazione sanitaria utile']
+};
+
+const scadenzeDefault = ['Aggiornare ISEE','Controllare Assegno Unico','Controllare Bonus Nido','Verificare congedi','Preparare documenti','Contattare CAF/Patronato','Controllare bonus regionali/comunali'];
+
+const domandeCategories = {
+  'Generale': ['Quali bonus posso controllare nella mia situazione?','Quali scadenze devo rispettare?','Quali documenti mi mancano?','Posso ricevere più agevolazioni insieme?'],
+  'ISEE': ['Devo aggiornare l\'ISEE?','Cosa succede se non ho ISEE?','Il mio ISEE cambia l\'importo?'],
+  'Congedi': ['Ho ancora mesi di congedo disponibili?','Posso usare il congedo a giorni o a ore?','Il papà può usare parte dei congedi?','Cosa cambia se lavoro part-time?'],
+  'Bonus': ['Posso richiedere Bonus Nido?','Esistono bonus regionali o comunali?','Il Bonus Mamme può riguardarmi?','Ci sono aiuti per figli con disabilità?']
+};
+
+const piano7Days = [
+  {day:'GIORNO 1',task:'Raccolgo i documenti principali'},
+  {day:'GIORNO 2',task:'Controllo SPID/CIE e accesso INPS'},
+  {day:'GIORNO 3',task:'Verifico ISEE o DSU'},
+  {day:'GIORNO 4',task:'Controllo Assegno Unico e bonus principali'},
+  {day:'GIORNO 5',task:'Verifico congedi e lavoro'},
+  {day:'GIORNO 6',task:'Preparo domande per CAF/INPS/Patronato'},
+  {day:'GIORNO 7',task:'Decido il prossimo passo'}
+];
+
+// State
+let state = JSON.parse(localStorage.getItem('plannerMamma') || '{}');
+function save() { localStorage.setItem('plannerMamma', JSON.stringify(state)); updateGlobalProgress(); }
+
+// Navigation
+function showSection(id) {
+  document.querySelectorAll('section[id^="sec-"]').forEach(s => {
+    s.classList.add('hidden');
+    s.classList.remove('fade-in');
+  });
+  const sec = document.getElementById('sec-' + id);
+  if (sec) { sec.classList.remove('hidden'); sec.classList.add('fade-in'); }
+  document.getElementById('sec-cta').classList.remove('hidden');
+  document.querySelectorAll('#navBar button').forEach((b,i) => {
+    b.classList.remove('active');
+    const sections = ['home','situazione','priorita','bonus','documenti','scadenze','domande','piano7','riepilogo'];
+    if (sections[i] === id) b.classList.add('active');
+  });
+  if (id === 'riepilogo') updateRiepilogo();
+  document.querySelector('.app-wrapper').scrollTop = 0;
+}
+
+// Render checklist helper
+function renderChecklist(container, items, prefix) {
+  const el = document.getElementById(container);
+  el.innerHTML = items.map((item, i) => {
+    const key = prefix + '_' + i;
+    const checked = state[key] ? 'checked' : '';
+    return `<label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="checkbox-custom mt-0.5" ${checked} onchange="state['${key}']=this.checked;save();updatePriorita()"><span class="text-sm">${item}</span></label>`;
+  }).join('');
+}
+
+// Priorità
+function renderPriorita() {
+  renderChecklist('priorita-alta', prioritaAlta, 'p_alta');
+  renderChecklist('priorita-media', prioritaMedia, 'p_media');
+  renderChecklist('priorita-bassa', prioritaBassa, 'p_bassa');
+  updatePriorita();
+}
+function updatePriorita() {
+  const all = [...prioritaAlta,...prioritaMedia,...prioritaBassa];
+  const total = all.length;
+  let done = 0;
+  all.forEach((_, i) => {
+    const prefix = i < prioritaAlta.length ? 'p_alta' : i < prioritaAlta.length + prioritaMedia.length ? 'p_media' : 'p_bassa';
+    const idx = i < prioritaAlta.length ? i : i < prioritaAlta.length + prioritaMedia.length ? i - prioritaAlta.length : i - prioritaAlta.length - prioritaMedia.length;
+    if (state[prefix + '_' + idx]) done++;
+  });
+  const pct = Math.round((done/total)*100);
+  document.getElementById('prioritaBar').style.width = pct + '%';
+  document.getElementById('prioritaPercent').textContent = pct + '%';
+}
+
+// Bonus
+function renderBonus() {
+  const c = document.getElementById('bonusContainer');
+  c.innerHTML = bonusList.map((b, i) => {
+    const riguarda = state['bonus_riguarda_'+i] || '';
+    const checked = state['bonus_check_'+i] ? 'checked' : '';
+    const passo = state['bonus_passo_'+i] || '';
+    const note = state['bonus_note_'+i] || '';
+    return `<div class="bg-bianco card-section p-4 shadow-sm border border-rosa/10">
+      <h4 class="text-sm font-bold mb-2">${b}</h4>
+      <div class="grid grid-cols-2 gap-2 mb-2">
+        <div><label class="text-[10px] font-semibold text-marrone/60">Mi riguarda?</label>
+        <select class="field-input text-xs py-1.5" onchange="state['bonus_riguarda_${i}']=this.value;save()">
+          <option value="">-</option><option ${riguarda==='sì'?'selected':''}>sì</option><option ${riguarda==='no'?'selected':''}>no</option><option ${riguarda==='da verificare'?'selected':''}>da verificare</option>
+        </select></div>
+        <div class="flex items-end"><label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="checkbox-custom" ${checked} onchange="state['bonus_check_${i}']=this.checked;save()"><span class="text-xs">Controllato</span></label></div>
+      </div>
+      <input class="field-input text-xs py-1.5 mb-1" placeholder="Prossimo passo..." value="${passo}" oninput="state['bonus_passo_${i}']=this.value;save()">
+      <input class="field-input text-xs py-1.5" placeholder="Note..." value="${note}" oninput="state['bonus_note_${i}']=this.value;save()">
+    </div>`;
+  }).join('');
+}
+
+// Documenti
+function renderDocumenti() {
+  const c = document.getElementById('documentiContainer');
+  let html = '';
+  let idx = 0;
+  for (const [cat, items] of Object.entries(documentiCategories)) {
+    html += `<div class="bg-bianco card-section p-4 shadow-sm border border-rosa/10"><h3 class="text-sm font-bold mb-2 text-salvia">${cat}</h3><div class="space-y-2">`;
+    items.forEach(item => {
+      const key = 'doc_' + idx;
+      const checked = state[key] ? 'checked' : '';
+      html += `<label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="checkbox-custom mt-0.5" ${checked} onchange="state['${key}']=this.checked;save()"><span class="text-sm">${item}</span></label>`;
+      idx++;
+    });
+    html += '</div></div>';
+  }
+  c.innerHTML = html;
+}
+function markAllDocs(val) {
+  let idx = 0;
+  for (const items of Object.values(documentiCategories)) {
+    items.forEach(() => { state['doc_'+idx] = val; idx++; });
+  }
+  save(); renderDocumenti();
+}
+
+// Scadenze
+function renderScadenze() {
+  if (!state.scadenze) state.scadenze = scadenzeDefault.map(s => ({attivita:s,data:'',stato:'da fare',note:''}));
+  const c = document.getElementById('scadenzeContainer');
+  c.innerHTML = state.scadenze.map((s, i) => `
+    <div class="bg-bianco card-section p-4 shadow-sm border border-rosa/10">
+      <input class="field-input text-sm font-semibold mb-2" value="${s.attivita}" oninput="state.scadenze[${i}].attivita=this.value;save()">
+      <div class="grid grid-cols-2 gap-2">
+        <div><label class="text-[10px] text-marrone/60">Data limite</label><input type="date" class="field-input text-xs py-1.5" value="${s.data}" onchange="state.scadenze[${i}].data=this.value;save()"></div>
+        <div><label class="text-[10px] text-marrone/60">Stato</label><select class="field-input text-xs py-1.5" onchange="state.scadenze[${i}].stato=this.value;save()">
+          <option ${s.stato==='da fare'?'selected':''}>da fare</option><option ${s.stato==='in corso'?'selected':''}>in corso</option><option ${s.stato==='fatto'?'selected':''}>fatto</option>
+        </select></div>
+      </div>
+      <input class="field-input text-xs py-1.5 mt-2" placeholder="Note..." value="${s.note||''}" oninput="state.scadenze[${i}].note=this.value;save()">
+    </div>
+  `).join('');
+}
+function addScadenza() {
+  if (!state.scadenze) state.scadenze = [];
+  state.scadenze.push({attivita:'',data:'',stato:'da fare',note:''});
+  save(); renderScadenze();
+}
+
+// Domande
+function renderDomande() {
+  const c = document.getElementById('domandeContainer');
+  let html = '';
+  let idx = 0;
+  for (const [cat, items] of Object.entries(domandeCategories)) {
+    html += `<div class="bg-bianco card-section p-4 shadow-sm border border-rosa/10"><h3 class="text-sm font-bold mb-2 text-rosa">${cat}</h3><div class="space-y-2">`;
+    items.forEach(item => {
+      const key = 'dom_' + idx;
+      const checked = state[key] ? 'checked' : '';
+      html += `<label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" class="checkbox-custom mt-0.5" ${checked} onchange="state['${key}']=this.checked;save()"><span class="text-sm">${item}</span></label>`;
+      idx++;
+    });
+    html += '</div></div>';
+  }
+  c.innerHTML = html;
+}
+
+// Piano 7 giorni
+function renderPiano7() {
+  const c = document.getElementById('piano7Container');
+  c.innerHTML = piano7Days.map((d, i) => {
+    const key = 'piano7_' + i;
+    const checked = state[key] ? 'checked' : '';
+    const note = state['piano7_note_'+i] || '';
+    return `<div class="bg-bianco card-section p-4 shadow-sm border border-rosa/10">
+      <label class="flex items-start gap-3 cursor-pointer mb-2"><input type="checkbox" class="checkbox-custom mt-0.5" ${checked} onchange="state['${key}']=this.checked;save()"><div><span class="text-xs font-bold text-salvia">${d.day}</span><p class="text-sm">${d.task}</p></div></label>
+      <input class="field-input text-xs py-1.5" placeholder="Note..." value="${note}" oninput="state['piano7_note_${i}']=this.value;save()">
+    </div>`;
+  }).join('');
+}
+
+// Riepilogo
+function updateRiepilogo() {
+  const stats = document.getElementById('riepilogoStats');
+  // Count completions
+  const allPrio = prioritaAlta.length + prioritaMedia.length + prioritaBassa.length;
+  let prioDone = 0;
+  for (let i = 0; i < prioritaAlta.length; i++) if (state['p_alta_'+i]) prioDone++;
+  for (let i = 0; i < prioritaMedia.length; i++) if (state['p_media_'+i]) prioDone++;
+  for (let i = 0; i < prioritaBassa.length; i++) if (state['p_bassa_'+i]) prioDone++;
+
+  let docTotal = 0, docDone = 0;
+  for (const items of Object.values(documentiCategories)) { items.forEach((_,i2) => { docTotal++; }); }
+  for (let i = 0; i < docTotal; i++) if (state['doc_'+i]) docDone++;
+
+  let bonusDone = 0;
+  for (let i = 0; i < bonusList.length; i++) if (state['bonus_check_'+i]) bonusDone++;
+
+  let domTotal = 0;
+  for (const items of Object.values(domandeCategories)) domTotal += items.length;
+  let domDone = 0;
+  for (let i = 0; i < domTotal; i++) if (state['dom_'+i]) domDone++;
+
+  stats.innerHTML = `
+    <div class="bg-salvia/10 rounded-xl p-3 text-center"><p class="text-lg font-bold text-salvia">${prioDone}/${allPrio}</p><p class="text-[10px]">Priorità</p></div>
+    <div class="bg-rosa/10 rounded-xl p-3 text-center"><p class="text-lg font-bold text-rosa">${docDone}/${docTotal}</p><p class="text-[10px]">Documenti</p></div>
+    <div class="bg-salvia/10 rounded-xl p-3 text-center"><p class="text-lg font-bold text-salvia">${bonusDone}/${bonusList.length}</p><p class="text-[10px]">Bonus controllati</p></div>
+    <div class="bg-rosa/10 rounded-xl p-3 text-center"><p class="text-lg font-bold text-rosa">${domDone}/${domTotal}</p><p class="text-[10px]">Domande fatte</p></div>
+  `;
+}
+
+// Global progress
+function updateGlobalProgress() {
+  let total = 0, done = 0;
+  // Priorità
+  const allPrio = prioritaAlta.length + prioritaMedia.length + prioritaBassa.length;
+  total += allPrio;
+  for (let i = 0; i < prioritaAlta.length; i++) if (state['p_alta_'+i]) done++;
+  for (let i = 0; i < prioritaMedia.length; i++) if (state['p_media_'+i]) done++;
+  for (let i = 0; i < prioritaBassa.length; i++) if (state['p_bassa_'+i]) done++;
+  // Docs
+  let docTotal = 0;
+  for (const items of Object.values(documentiCategories)) docTotal += items.length;
+  total += docTotal;
+  for (let i = 0; i < docTotal; i++) if (state['doc_'+i]) done++;
+  // Bonus
+  total += bonusList.length;
+  for (let i = 0; i < bonusList.length; i++) if (state['bonus_check_'+i]) done++;
+  // Piano 7
+  total += piano7Days.length;
+  for (let i = 0; i < piano7Days.length; i++) if (state['piano7_'+i]) done++;
+
+  const pct = total ? Math.round((done/total)*100) : 0;
+  document.getElementById('globalProgressBar').style.width = pct + '%';
+  document.getElementById('globalProgressText').textContent = pct + '%';
+}
+
+// Reset
+function resetPlanner() {
+  const overlay = document.createElement('div');
+  overlay.className = 'fixed inset-0 bg-black/40 flex items-center justify-center z-[9999] p-4';
+  overlay.innerHTML = `<div class="bg-bianco rounded-2xl p-6 max-w-sm w-full text-center">
+    <p class="font-semibold mb-4">Vuoi davvero ricominciare? Tutti i dati verranno cancellati.</p>
+    <div class="flex gap-2"><button onclick="confirmReset()" class="flex-1 bg-rosa text-white py-2 rounded-xl font-semibold">Sì, ricomincia</button><button onclick="this.closest('.fixed').remove()" class="flex-1 bg-marrone/10 text-marrone py-2 rounded-xl font-semibold">Annulla</button></div>
+  </div>`;
+  document.body.appendChild(overlay);
+}
+function confirmReset() {
+  state = {};
+  localStorage.removeItem('plannerMamma');
+  document.querySelector('.fixed')?.remove();
+  init();
+  showSection('home');
+  showToast('Planner resettato!');
+}
+
+// Download
+function downloadRiepilogo() {
+  let text = "RIEPILOGO PLANNER MAMMA\n\n";
+  text += "Primo passo: " + (state.riepilogo_primo || '-') + "\n";
+  text += "Urgenza: " + (state.riepilogo_urgenza || '-') + "\n";
+  text += "Contatto: " + (state.riepilogo_contatto || '-') + "\n\n";
+  text += "--- Note ---\n" + (state.sit_note || '-');
+  const blob = new Blob([text], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'riepilogo-planner-mamma.txt';
+  a.click();
+}
+
+// Toast
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+// Auto-save fields
+function setupAutoSave() {
+  document.querySelectorAll('[data-save]').forEach(el => {
+    const key = el.dataset.save;
+    if (state[key]) el.value = state[key];
+    el.addEventListener('input', () => { state[key] = el.value; save(); });
+    el.addEventListener('change', () => { state[key] = el.value; save(); });
+  });
+}
+
+// Init
+function init() {
+  renderPriorita();
+  renderBonus();
+  renderDocumenti();
+  renderScadenze();
+  renderDomande();
+  renderPiano7();
+  setupAutoSave();
+  updateGlobalProgress();
+}
+
+// Element SDK
+const defaultConfig = {
+  main_title: 'Planner Bonus & Documenti Mamma',
+  subtitle: 'Organizza bonus, documenti, scadenze e domande importanti senza sentirti sopraffatta.',
+  background_color: '#FDF8F3',
+  surface_color: '#FFFDF9',
+  text_color: '#4A2E2A',
+  primary_action: '#E8A0A8',
+  secondary_action: '#B5C9B7',
+  font_family: 'Nunito',
+  font_size: 14
+};
+
+function applyConfig(config) {
+  const title = document.getElementById('mainTitle');
+  const sub = document.getElementById('subtitleEl');
+  if (title) title.textContent = config.main_title || defaultConfig.main_title;
+  if (sub) sub.textContent = config.subtitle || defaultConfig.subtitle;
+
+  const font = config.font_family || defaultConfig.font_family;
+  const size = config.font_size || defaultConfig.font_size;
+  document.body.style.fontFamily = `${font}, Nunito, sans-serif`;
+  document.body.style.fontSize = size + 'px';
+  document.body.style.backgroundColor = config.background_color || defaultConfig.background_color;
+  document.body.style.color = config.text_color || defaultConfig.text_color;
+}
+
+window.elementSdk.init({
+  defaultConfig,
+  onConfigChange: async (config) => { applyConfig(config); },
+  mapToCapabilities: (config) => ({
+    recolorables: [
+      { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({background_color:v}); }},
+      { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({surface_color:v}); }},
+      { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({text_color:v}); }},
+      { get: () => config.primary_action || defaultConfig.primary_action, set: (v) => { config.primary_action = v; window.elementSdk.setConfig({primary_action:v}); }},
+      { get: () => config.secondary_action || defaultConfig.secondary_action, set: (v) => { config.secondary_action = v; window.elementSdk.setConfig({secondary_action:v}); }}
+    ],
+    borderables: [],
+    fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: (v) => { config.font_family = v; window.elementSdk.setConfig({font_family:v}); }},
+    fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({font_size:v}); }}
+  }),
+  mapToEditPanelValues: (config) => new Map([
+    ['main_title', config.main_title || defaultConfig.main_title],
+    ['subtitle', config.subtitle || defaultConfig.subtitle]
+  ])
+});
+
+init();
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a04c6497992f3a7f',t:'MTc4MDI5Nzc2Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
