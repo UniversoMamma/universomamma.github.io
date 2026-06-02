@@ -48,14 +48,14 @@
   .nav-cta:hover { background: var(--rose); transform: translateY(-1px); }
 
   /* HERO */
-  .hero {
+  #art5-overlay .hero {
     min-height: 90vh; display: block;
     align-items: center; gap: 4rem; padding: 5rem 5rem 4rem;
     background: linear-gradient(135deg, var(--rose-pale) 0%, var(--cream) 55%, #FEF3EC 100%);
     position: relative; overflow: hidden;
   }
-  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 500px; height: 500px; background: radial-gradient(circle, var(--rose-soft) 0%, transparent 70%); border-radius: 50%; opacity: 0.5; }
-  .hero::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 350px; height: 350px; background: radial-gradient(circle, var(--peach) 0%, transparent 70%); border-radius: 50%; opacity: 0.4; }
+  #art5-overlay .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 500px; height: 500px; background: radial-gradient(circle, var(--rose-soft) 0%, transparent 70%); border-radius: 50%; opacity: 0.5; }
+  #art5-overlay .hero::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 350px; height: 350px; background: radial-gradient(circle, var(--peach) 0%, transparent 70%); border-radius: 50%; opacity: 0.4; }
   .hero-text { position: relative; z-index: 2; }
   .hero-tag { display: inline-block; background: var(--rose-soft); color: var(--rose-deep); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 30px; margin-bottom: 1.5rem; }
   .hero h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 3.5vw, 3.4rem); line-height: 1.22; color: var(--text); margin-bottom: 1.2rem; }
@@ -236,7 +236,7 @@
   /* RESPONSIVE */
   @media (max-width: 960px) {
     section { padding: 3.5rem 1.5rem; }
-    .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; min-height: auto; gap: 2rem; }
+    #art5-overlay .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; min-height: auto; gap: 2rem; }
     .percorso-grid { grid-template-columns: 1fr 1fr; }
     .prodotti-grid { grid-template-columns: 1fr 1fr; }
     .blog-grid { grid-template-columns: 1fr; }
@@ -432,7 +432,7 @@
       <div class="prodotto-img p5" style="filter:grayscale(0.5);">💼</div>
       <div class="prodotto-body">
         <div class="prodotto-cat">Prossimamente</div>
-        <h3>Scopri cosa ti spetta davvero</h3>
+        <h3>Kit Completo — Tutto quello che ti spetta da mamma davvero</h3>
         <p>Stiamo lavorando per te. Iscriviti alla newsletter per essere la prima a sapere quando sarà disponibile.</p>
         <div class="prodotto-footer">
           <span class="price" style="color:var(--text-muted);">Presto disponibile</span>
@@ -480,11 +480,11 @@
         <img src="data:image/jpeg;base64,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" alt="Mamma con neonato" style="width:90px;height:120px;object-fit:contain;border-radius:12px;flex-shrink:0;box-shadow:0 4px 16px rgba(200,120,130,0.2);background:#FBF0F1;">
         <div>
           <span class="section-tag">Diritti & Sussidi</span>
-          <h2 class="section-title"><em>Scopri cosa ti spetta</em> davvero</h2>
+          <h2 class="section-title"><em>Kit Completo — Tutto quello che ti spetta da mamma</em> davvero</h2>
         </div>
       </div>
       <p class="section-sub" style="margin-bottom:2rem;color:var(--text);">La maggior parte delle mamme non sa a cosa ha diritto. Congedo, Assegno Unico, bonus nido, esenzioni ticket: scarica la guida con calcolatore incluso e scopri esattamente quanto ti spetta.</p>
-      <button class="btn-primary" onclick="openModal('Diritti e Lavoro','Scopri cosa ti spetta davvero','Sai davvero a quanto hai diritto? Congedo maternita, Assegno Unico, bonus nido, congedo parentale, esenzioni ticket... La maggior parte delle mamme lascia centinaia di euro sul tavolo ogni anno. Questa guida ti dice esattamente cosa ti spetta, con calcolatore incluso.','Solo €9 — Prezzo lancio (poi €19)','https://universomamma.gumroad.com/l/xbfvhi')">🔥 Scopri cosa ti spetta — Solo €9 →</button>
+      <button class="btn-primary" onclick="openModal('Diritti e Lavoro','Kit Completo — Tutto quello che ti spetta da mamma davvero','Sai davvero a quanto hai diritto? Congedo maternita, Assegno Unico, bonus nido, congedo parentale, esenzioni ticket... La maggior parte delle mamme lascia centinaia di euro sul tavolo ogni anno. Questa guida ti dice esattamente cosa ti spetta, con calcolatore incluso.','Solo €9 — Prezzo lancio (poi €19)','https://universomamma.gumroad.com/l/xbfvhi')">🔥 Kit Completo — Tutto quello che ti spetta da mamma — Solo €9 →</button>
     </div>
     <div class="inps-cards">
       <div class="inps-card">
@@ -562,7 +562,7 @@
           <p style="font-size:1.3rem;margin-bottom:0.2rem;">🔒</p>
           <p style="font-size:0.9rem;font-weight:700;color:#3D2B2B;margin:0.2rem 0;">Sblocca il risultato completo</p>
           <p style="font-size:0.78rem;color:#8C7070;margin-bottom:0.8rem;text-align:center;">Tutti i tuoi benefici + il totale esatto nella guida</p>
-          <button onclick="openModal('Diritti e Lavoro','Scopri cosa ti spetta davvero','Sai davvero a quanto hai diritto? Congedo maternita, Assegno Unico, bonus nido, congedo parentale, esenzioni ticket... La maggior parte delle mamme lascia centinaia di euro sul tavolo ogni anno. Questa guida ti dice esattamente cosa ti spetta, con calcolatore incluso.','Solo 9 euro — Prezzo lancio (poi 19 euro)','https://universomamma.gumroad.com/l/xbfvhi')" style="background:#C97080;color:white;border:none;padding:0.7rem 1.8rem;border-radius:30px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;">
+          <button onclick="openModal('Diritti e Lavoro','Kit Completo — Tutto quello che ti spetta da mamma davvero','Sai davvero a quanto hai diritto? Congedo maternita, Assegno Unico, bonus nido, congedo parentale, esenzioni ticket... La maggior parte delle mamme lascia centinaia di euro sul tavolo ogni anno. Questa guida ti dice esattamente cosa ti spetta, con calcolatore incluso.','Solo 9 euro — Prezzo lancio (poi 19 euro)','https://universomamma.gumroad.com/l/xbfvhi')" style="background:#C97080;color:white;border:none;padding:0.7rem 1.8rem;border-radius:30px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;">
             Sblocca per 9 euro
           </button>
         </div>
@@ -1269,13 +1269,15 @@
           <div class="bcard-meta">12 Maggio 2026 · 5 min</div>
         </div>
       </div>
-      <div class="bcard coming" style="position:relative;">
-        <span class="coming-lbl">🕐 In arrivo</span>
-        <div class="bcard-img" style="background:linear-gradient(135deg,#FAEEDA,#F2D0B0);">💶</div>
+      <div class="bcard" onclick="chiudiBlog();apriArticolo5();" style="cursor:pointer;">
+        <div class="bcard-img" style="background:linear-gradient(135deg,#185FA5,#2D7DD2);display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:3rem;">🧮</span>
+        </div>
         <div class="bcard-body">
-          <div class="bcard-cat" style="color:#854F0B;">Articolo</div>
-          <h3>Congedo di maternita: tutto quello che devi sapere</h3>
-          <div class="bcard-meta">Iscriviti alla newsletter</div>
+          <div class="bcard-cat" style="color:#185FA5;">Articolo</div>
+          <h3>Le domande piu urgenti sui diritti INPS delle mamme</h3>
+          <p>7 risposte chiare su assegno unico, congedo, bonus nido e molto altro.</p>
+          <div class="bcard-meta">Universo Mamma · 5 min</div>
         </div>
       </div>
       <div class="bcard coming" style="position:relative;">
@@ -1396,7 +1398,7 @@
     <div class="a3-cta">
       <h3>Scopri subito quanto potrebbe spettarti</h3>
       <p>Evita errori e capisci in modo semplice quali bonus potresti ricevere nel 2026.</p>
-      <a href="https://universomamma.gumroad.com/l/xbfvhi" target="_blank">Scopri la guida completa →</a>
+      <a href="https://universomamma.gumroad.com/l/xbfvhi" target="_blank">Kit completo — Solo €9,90 →</a>
     </div>
 
     <div class="a3-disc">Le normative INPS e gli importi dei bonus possono cambiare nel tempo. Per situazioni specifiche e consigliabile verificare le informazioni aggiornate direttamente sui canali ufficiali INPS o tramite un professionista qualificato. Questo articolo ha scopo puramente informativo.</div>
@@ -1415,20 +1417,16 @@
     document.getElementById('art3-back').style.display = 'none';
     document.body.style.overflow = '';
   }
-</script>
-
-
-<!-- PAGINA ARTICOLO RASSICURAZIONE -->
-<style>
+</s
   #art4-overlay { display:none; position:fixed; inset:0; z-index:9999; overflow-y:auto; background:#FDF8F3; font-family:'Lato',sans-serif; }
   #art4-back { position:fixed; top:1rem; left:1rem; z-index:10000; background:#C97080; color:white; border:none; padding:0.55rem 1.2rem; border-radius:20px; font-size:0.85rem; font-weight:700; cursor:pointer; font-family:'Lato',sans-serif; display:none; box-shadow:0 4px 12px rgba(200,120,130,0.3); }
-  #art4-overlay .hero { background:linear-gradient(160deg,#2B1E1E,#4A2B35) !important; padding:5rem 2rem; text-align:center; position:relative; overflow:hidden; min-height:auto; display:block; }
-  #art4-overlay .hero::before { content:''; position:absolute; top:-100px; right:-100px; width:400px; height:400px; background:radial-gradient(circle,rgba(201,112,128,0.15),transparent 70%); border-radius:50%; }
-  #art4-overlay .hero .cat { font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#E8A0A8; display:block; margin-bottom:1rem; }
+  #art4-overlay #art5-overlay .hero { background:linear-gradient(160deg,#2B1E1E,#4A2B35) !important; padding:5rem 2rem; text-align:center; position:relative; overflow:hidden; min-height:auto; display:block; }
+  #art4-overlay #art5-overlay .hero::before { content:''; position:absolute; top:-100px; right:-100px; width:400px; height:400px; background:radial-gradient(circle,rgba(201,112,128,0.15),transparent 70%); border-radius:50%; }
+  #art4-overlay #art5-overlay .hero .cat { font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#E8A0A8; display:block; margin-bottom:1rem; }
   #art4-overlay .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.2rem); color:white; max-width:680px; margin:0 auto 1.2rem; line-height:1.2; }
   #art4-overlay .hero h1 em { color:#E8A0A8; font-style:italic; }
-  #art4-overlay .hero .sub { font-size:1.05rem; color:rgba(255,255,255,0.65); max-width:480px; margin:0 auto 1rem; line-height:1.8; }
-  #art4-overlay .hero .meta { font-size:0.78rem; color:rgba(255,255,255,0.35); }
+  #art4-overlay #art5-overlay .hero .sub { font-size:1.05rem; color:rgba(255,255,255,0.65); max-width:480px; margin:0 auto 1rem; line-height:1.8; }
+  #art4-overlay #art5-overlay .hero .meta { font-size:0.78rem; color:rgba(255,255,255,0.35); }
   #art4-overlay .wrap { max-width:660px; margin:0 auto; padding:3rem 2rem 5rem; }
   #art4-overlay .intro { font-size:1.08rem; color:#3D2B2B; line-height:1.95; margin-bottom:2.5rem; padding:1.8rem 2rem; background:white; border-radius:16px; border-left:4px solid #C97080; }
   #art4-overlay p { font-size:0.97rem; color:#3D2B2B; margin-bottom:1.3rem; line-height:1.9; }
@@ -1452,6 +1450,7 @@
   #art4-overlay .btn-cta { display:inline-block; background:white; color:#C97080; padding:1rem 2.5rem; border-radius:40px; font-size:1rem; font-weight:700; text-decoration:none; }
   #art4-overlay .btn-cta .prezzo { font-size:0.78rem; font-weight:400; color:#8C7070; display:block; margin-top:2px; }
   #art4-overlay .disclaimer { font-size:0.78rem; color:#8C7070; font-style:italic; padding:1rem 1.2rem; background:#F1EFE8; border-radius:10px; margin-top:2rem; line-height:1.7; }
+border-radius:10px; margin-top:2rem; line-height:1.7; }
 </style>
 
 <button id="art4-back" onclick="chiudiArticolo4()">← Torna al sito</button>
@@ -1546,7 +1545,199 @@
   }
   function chiudiArticolo4() {
     document.getElementById('art4-overlay').style.display = 'none';
-    document.getElementById('art4-back').style.display = 'none';
+    document.getElementById('art4-b
+  #art5-overlay { display:none; position:fixed; inset:0; z-index:9999; overflow-y:auto; background:#FDF8F3; font-family:'Lato',sans-serif; }
+  #art5-back { position:fixed; top:1rem; left:1rem; z-index:10000; background:#185FA5; color:white; border:none; padding:0.55rem 1.2rem; border-radius:20px; font-size:0.85rem; font-weight:700; cursor:pointer; font-family:'Lato',sans-serif; display:none; box-shadow:0 4px 12px rgba(24,95,165,0.3); }
+  
+  #art5-overlay * { box-sizing:border-box; }
+  .header { background:#FDF8F3; border-bottom:1px solid #F5D5D9; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; }
+  .header a.logo { font-family:'Playfair Display',serif; font-size:1.3rem; color:#C97080; text-decoration:none; font-style:italic; }
+  .header a.back { font-size:0.85rem; color:#8C7070; text-decoration:none; }
+  .header a.back:hover { color:#C97080; }
+
+  #art5-overlay .hero { background:linear-gradient(135deg,#185FA5,#2D7DD2); padding:4.5rem 2rem; text-align:center; position:relative; overflow:hidden; }
+  #art5-overlay .hero::before { content:'€'; position:absolute; right:5%; top:50%; transform:translateY(-50%); font-size:18rem; color:rgba(255,255,255,0.05); font-weight:700; line-height:1; }
+  #art5-overlay .hero .cat { font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.7); display:block; margin-bottom:1rem; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); color:white; max-width:680px; margin:0 auto 1rem; line-height:1.25; }
+  .hero h1 em { color:#FAC775; font-style:italic; }
+  #art5-overlay .hero .sub { font-size:1rem; color:rgba(255,255,255,0.8); max-width:500px; margin:0 auto 1rem; line-height:1.8; }
+  #art5-overlay .hero .meta { font-size:0.78rem; color:rgba(255,255,255,0.45); }
+
+  .wrap { max-width:700px; margin:0 auto; padding:3rem 2rem 5rem; }
+
+  .intro { font-size:1.05rem; color:#3D2B2B; line-height:1.9; margin-bottom:2.5rem; padding:1.5rem 2rem; background:white; border-radius:16px; border-left:4px solid #185FA5; }
+
+  /* Q&A */
+  .qa { margin-bottom:1.5rem; background:white; border-radius:16px; overflow:hidden; border:1px solid #E6F1FB; box-shadow:0 4px 16px rgba(24,95,165,0.06); }
+  .qa-q { background:linear-gradient(135deg,#E6F1FB,#F0F7FF); padding:1.2rem 1.5rem; display:flex; align-items:flex-start; gap:0.8rem; cursor:pointer; }
+  .qa-q .num { background:#185FA5; color:white; width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; flex-shrink:0; margin-top:0.1rem; }
+  .qa-q p { font-family:'Playfair Display',serif; font-size:1rem; color:#3D2B2B; font-style:italic; line-height:1.4; }
+  .qa-a { padding:1.3rem 1.5rem; }
+  .qa-a p { font-size:0.93rem; color:#3D2B2B; line-height:1.85; margin-bottom:0.8rem; }
+  .qa-a p:last-child { margin-bottom:0; }
+  .qa-a strong { color:#185FA5; }
+  .qa-a .nota { font-size:0.82rem; color:#8C7070; font-style:italic; background:#E6F1FB; padding:0.7rem 1rem; border-radius:8px; margin-top:0.8rem; line-height:1.6; }
+  .qa-a .attenzione { font-size:0.82rem; color:#854F0B; background:#FAEEDA; padding:0.7rem 1rem; border-radius:8px; margin-top:0.8rem; line-height:1.6; }
+
+  .divider { border:none; border-top:1px solid #F5D5D9; margin:2.5rem 0; }
+
+  /* CALCOLATORE CTA */
+  .calc-cta { background:linear-gradient(135deg,#185FA5,#2D7DD2); border-radius:20px; padding:2.5rem 2rem; text-align:center; margin:3rem 0; position:relative; overflow:hidden; }
+  .calc-cta::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; background:rgba(255,255,255,0.06); border-radius:50%; }
+  .calc-cta .badge { display:inline-block; background:rgba(255,255,255,0.15); color:white; font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:1rem; }
+  .calc-cta h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:white; margin-bottom:0.8rem; line-height:1.3; position:relative; }
+  .calc-cta p { color:rgba(255,255,255,0.88); font-size:0.95rem; margin-bottom:1.5rem; line-height:1.8; position:relative; }
+  .calc-cta .dentro { text-align:left; background:rgba(255,255,255,0.1); border-radius:12px; padding:1rem 1.2rem; margin-bottom:1.5rem; display:flex; flex-direction:column; gap:0.5rem; position:relative; }
+  .calc-cta .dentro span { font-size:0.88rem; color:white; display:flex; align-items:center; gap:0.5rem; }
+  .calc-cta .dentro span::before { content:'✓'; font-weight:700; flex-shrink:0; }
+  .btn-calc { display:inline-block; background:#FAC775; color:#3D2B2B; padding:1rem 2.5rem; border-radius:40px; font-size:1rem; font-weight:700; text-decoration:none; position:relative; transition:all 0.2s; }
+  .btn-calc:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.2); }
+  .btn-calc .sub-price { font-size:0.78rem; font-weight:400; color:#854F0B; display:block; margin-top:2px; }
+
+  .disclaimer { font-size:0.78rem; color:#8C7070; font-style:italic; padding:1rem 1.2rem; background:#F1EFE8; border-radius:10px; margin-top:2rem; line-height:1.7; }
+  footer { background:#3D2B2B; color:rgba(255,255,255,0.5); padding:1.5rem 2rem; text-align:center; font-size:0.8rem; }
+  footer a { color:#E8A0A8; text-decoration:none; }
+
+  @media(max-width:600px) {
+    #art5-overlay .hero { padding:3rem 1.5rem; }
+    .wrap { padding:2rem 1.2rem 4rem; }
+  }
+
+coration:none; }
+
+  @media(max-width:600px) {
+    .hero { padding:3rem 1.5rem; }
+    .wrap { padding:2rem 1.2rem 4rem; }
+  }
+
+</style>
+<button id="art5-back" onclick="chiudiArticolo5()">← Torna al sito</button>
+<div id="art5-overlay" style="display:none;">
+  
+
+
+
+<div class="hero">
+  <span class="cat">Diritti & INPS</span>
+  <h1>Le domande piu urgenti sui <em>diritti INPS delle mamme</em></h1>
+  <p class="sub">Risposte chiare alle domande che ogni mamma si fa — e che spesso nessuno sa rispondere.</p>
+  <div class="meta">Universo Mamma &nbsp;·&nbsp; 5 min di lettura</div>
+</div>
+
+<div class="wrap">
+
+  <p class="intro">Ogni giorno migliaia di mamme italiane perdono centinaia di euro di sussidi INPS — non perche non ne abbiano diritto, ma perche nessuno gliel'ha spiegato chiaramente. Ecco le risposte alle domande piu urgenti.</p>
+
+  <div class="qa">
+    <div class="qa-q"><div class="num">1</div><p>Ho appena scoperto di essere incinta. Cosa devo fare subito con l'INPS?</p></div>
+    <div class="qa-a">
+      <p>La prima cosa da fare e comunicare la gravidanza al tuo medico di base e al ginecologo. Per l'INPS, l'azione piu urgente e verificare se hai diritto al <strong>congedo di maternita obbligatorio</strong> — 5 mesi retribuiti che partono di solito 2 mesi prima del parto.</p>
+      <p>Se sei lavoratrice dipendente, devi presentare domanda all'INPS o al tuo datore di lavoro. Non aspettare l'ultimo momento: fallo entro il 7° mese di gravidanza.</p>
+      <div class="nota">Puoi presentare domanda online su inps.it oppure tramite patronato o CAF — gratuitamente.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-q"><div class="num">2</div><p>Ho gia avuto il bambino. Ho ancora diritto all'Assegno Unico? Fino a quando?</p></div>
+    <div class="qa-a">
+      <p>Si, l'Assegno Unico Universale spetta <strong>dal 7° mese di gravidanza fino ai 21 anni del figlio</strong> (se ancora a carico). Non c'e un limite di eta per i figli disabili.</p>
+      <p>L'importo dipende dall'ISEE familiare: piu e basso, piu e alto l'assegno. Senza ISEE ricevi comunque un importo minimo, ma conviene sempre presentarlo per ricevere di piu.</p>
+      <div class="attenzione">Attenzione: la domanda si rinnova ogni anno. Se non rinnovi entro febbraio, perdi i mesi precedenti. Verifica la scadenza della tua domanda su inps.it</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-q"><div class="num">3</div><p>Quanto prendero durante il congedo di maternita?</p></div>
+    <div class="qa-a">
+      <p>Le lavoratrici dipendenti ricevono l'<strong>80% della retribuzione media</strong> per tutta la durata del congedo obbligatorio (5 mesi). Alcuni contratti collettivi prevedono il 100% — verifica il tuo CCNL.</p>
+      <p>Le lavoratrici autonome e le libere professioniste hanno regole diverse: l'indennita e calcolata sul reddito degli anni precedenti e varia in base alla categoria.</p>
+      <div class="nota">Le disoccupate e le inoccupate possono comunque avere diritto a una indennita — verifica sul sito INPS o tramite patronato.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-q"><div class="num">4</div><p>Cos'e il bonus nido e come lo richiedo?</p></div>
+    <div class="qa-a">
+      <p>Il bonus nido rimborsa le rette dell'asilo nido. L'importo massimo nel 2026 e di <strong>3.000 euro annui</strong>, erogati in rate mensili direttamente dall'INPS.</p>
+      <p>Per richiederlo: accedi a inps.it con SPID, cerca "Bonus asilo nido", allega le ricevute di pagamento della retta. La domanda va fatta ogni anno entro il 31 dicembre.</p>
+      <div class="attenzione">Errore comune: molte mamme non sanno che le ricevute devono essere intestate al genitore che fa domanda, non al bambino. Verifica sempre.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-q"><div class="num">5</div><p>Posso lavorare durante il congedo parentale?</p></div>
+    <div class="qa-a">
+      <p>No. Durante il congedo parentale retribuito non puoi svolgere attivita lavorativa — ne per il tuo datore di lavoro, ne per altri. Potresti perdere il diritto all'indennita.</p>
+      <p>Il <strong>congedo parentale</strong> dura fino a 6 mesi (entrambi i genitori insieme), retribuito al 80% per i primi 3 mesi (novita 2024), poi al 30% fino ai 12 anni del bambino.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-q"><div class="num">6</div><p>Il mio datore di lavoro puo licenziarmi perche sono incinta?</p></div>
+    <div class="qa-a">
+      <p><strong>No, assolutamente no.</strong> Il licenziamento durante la gravidanza e fino al compimento di un anno di eta del bambino e nullo per legge (art. 54 D.Lgs. 151/2001). Anche le dimissioni in questo periodo richiedono la convalida dell'Ispettorato del Lavoro.</p>
+      <p>Se ti e stato comunicato un licenziamento durante la gravidanza, contatta subito un patronato, un sindacato o un avvocato del lavoro.</p>
+      <div class="nota">Hai diritto anche al rientro nel tuo stesso posto di lavoro dopo il congedo.</div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-q"><div class="num">7</div><p>Ho diritto a qualcosa anche se non lavoro?</p></div>
+    <div class="qa-a">
+      <p>Si. Anche le mamme non lavoratrici hanno diritto a diversi benefici:</p>
+      <p><strong>Assegno Unico Universale</strong> — spetta a tutti, anche senza reddito da lavoro.<br>
+      <strong>Assegno di maternita dei Comuni</strong> — per le mamme senza copertura INPS, erogato dal Comune di residenza.<br>
+      <strong>Esenzioni ticket sanitari</strong> — durante la gravidanza e fino a 1 anno del bambino.</p>
+      <div class="nota">Per conoscere tutti i benefici a cui hai diritto in base alla tua situazione specifica, usa il calcolatore qui sotto.</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="calc-cta">
+    <div class="badge">🧮 Kit completo — Prezzo lancio</div>
+    <h3>Scopri esattamente quanto ti spetta<br>con il calcolatore incluso</h3>
+    <p>Non indovinare. Calcola. La guida completa ti dice esattamente cosa puoi richiedere e quanto — in base alla tua situazione reale.</p>
+    <p style="color:rgba(255,255,255,0.9);font-size:0.9rem;margin-bottom:1rem;position:relative;">Dentro il kit trovi tutto questo:</p>
+    <div class="dentro">
+      <span>Calcolatore interattivo degli importi (Assegno Unico, bonus nido, congedo)</span>
+      <span>Guida completa ai bonus mamme 2026 — spiegata in modo semplice</span>
+      <span>Passo dopo passo per fare le domande INPS senza errori</span>
+      <span>Lista degli errori piu comuni da evitare</span>
+      <span>Documenti necessari per ogni bonus</span>
+      <span>Checklist scaricabile da seguire</span>
+      <span>Aggiornato con le novita 2026</span>
+    </div>
+    <div style="background:rgba(255,255,255,0.12);border-radius:12px;padding:1rem;margin-bottom:1.5rem;position:relative;">
+      <p style="font-size:1.4rem;font-weight:700;color:#FAC775;margin-bottom:0.2rem;">€9,90 <span style="font-size:0.9rem;font-weight:400;color:rgba(255,255,255,0.6);text-decoration:line-through;">€14,90</span></p>
+      <p style="font-size:0.8rem;color:rgba(255,255,255,0.7);">Prezzo lancio limitato — poi tornera a €14,90</p>
+    </div>
+    <a href="https://universomamma.gumroad.com/l/xbfvhi" target="_blank" class="btn-calc">
+      Calcola quanto ti spetta →
+      <span class="sub-price">Accesso immediato dopo l'acquisto</span>
+    </a>
+  </div>
+
+  <div class="disclaimer">
+    Le normative INPS e gli importi dei bonus possono cambiare nel tempo. Per situazioni specifiche e sempre consigliabile verificare le informazioni aggiornate direttamente sui canali ufficiali INPS o tramite un professionista qualificato. Questo articolo ha scopo puramente informativo.
+  </div>
+
+</div>
+
+
+
+
+</div>
+<script>
+  function apriArticolo5() {
+    document.getElementById('art5-overlay').style.display = 'block';
+    document.getElementById('art5-back').style.display = 'block';
+    window.scrollTo(0,0);
+    document.body.style.overflow = 'hidden';
+  }
+  function chiudiArticolo5() {
+    document.getElementById('art5-overlay').style.display = 'none';
+    document.getElementById('art5-back').style.display = 'none';
     document.body.style.overflow = '';
   }
 </script>
