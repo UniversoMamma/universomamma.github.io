@@ -2,37 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://universomamma.github.io/</loc>
-    <lastmod>2026-06-06</lastmod>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://universomamma.github.io/articolo-bonus-2026.html</loc>
-    <lastmod>2026-06-06</lastmod>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://universomamma.github.io/articolo-rassicurazione-fertilita.html</loc>
-    <lastmod>2026-06-06</lastmod>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://universomamma.github.io/articolo-domande-concepimento.html</loc>
-    <lastmod>2026-06-06</lastmod>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://universomamma.github.io/articolo-domande-inps.html</loc>
-    <lastmod>2026-06-06</lastmod>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://universomamma.github.io/articolo-5-verifiche-mamme.html</loc>
-    <lastmod>2026-06-06</lastmod>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://universomamma.github.io/articolo-neo-mamma-bonus-inps.html</loc>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
