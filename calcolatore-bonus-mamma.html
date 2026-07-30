@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calcolatore Bonus Mamma 2026 — Universo Mamma</title>
+<meta name="description" content="Scopri quali bonus INPS potresti avere diritto: Assegno Unico, bonus nido, congedo maternità e molto altro. Stima orientativa gratuita.">
+<link rel="canonical" href="https://universomamma.github.io/calcolatore-bonus-mamma.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Lato',sans-serif; background:#FDF8F3; color:#3D2B2B; line-height:1.7; }
+
+.header { background:#FDF8F3; border-bottom:1px solid #F5D5D9; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+.header a.logo { font-family:'Playfair Display',serif; font-size:1.3rem; color:#C97080; text-decoration:none; font-style:italic; }
+.header a.back { font-size:0.85rem; color:#8C7070; text-decoration:none; background:#FBF0F1; padding:0.4rem 1rem; border-radius:20px; border:1px solid #F5D5D9; }
+
+.hero { background:linear-gradient(135deg,#FBE8EC,#FDF8F3); padding:3rem 2rem 2.5rem; text-align:center; }
+.hero .cat { font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#C97080; display:block; margin-bottom:0.8rem; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:clamp(1.7rem,4vw,2.4rem); color:#3D2B2B; margin-bottom:0.8rem; line-height:1.3; }
+.hero h1 em { color:#C97080; font-style:italic; }
+.hero p { font-size:0.95rem; color:#8C7070; max-width:500px; margin:0 auto; line-height:1.8; }
+
+/* CALCOLATORE */
+.calc-wrap { max-width:680px; margin:0 auto; padding:2.5rem 1.5rem 4rem; }
+
+.step { background:white; border-radius:16px; padding:1.8rem; margin-bottom:1.2rem; border:1px solid #F5D5D9; display:none; }
+.step.active { display:block; }
+.step.done { display:none; }
+
+.step-num { font-size:0.68rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:#C97080; margin-bottom:0.4rem; display:block; }
+.step h2 { font-family:'Playfair Display',serif; font-size:1.15rem; color:#3D2B2B; margin-bottom:1.2rem; line-height:1.4; }
+
+/* Opzioni scelta */
+.options { display:flex; flex-direction:column; gap:0.7rem; }
+.option { display:flex; align-items:center; gap:0.8rem; padding:0.9rem 1.1rem; border:1.5px solid #F5D5D9; border-radius:12px; cursor:pointer; transition:all 0.18s; background:white; font-size:0.92rem; color:#3D2B2B; }
+.option:hover { border-color:#C97080; background:#FBF0F1; }
+.option.selected { border-color:#C97080; background:#FBF0F1; }
+.option input[type=radio], .option input[type=checkbox] { accent-color:#C97080; width:18px; height:18px; flex-shrink:0; }
+.option .opt-icon { font-size:1.2rem; }
+.option .opt-text { flex:1; }
+.option .opt-text strong { display:block; font-size:0.93rem; }
+.option .opt-text span { font-size:0.8rem; color:#8C7070; }
+
+/* Progress bar */
+.progress-wrap { margin-bottom:2rem; }
+.progress-label { display:flex; justify-content:space-between; font-size:0.78rem; color:#8C7070; margin-bottom:0.5rem; }
+.progress-bar { background:#F5D5D9; border-radius:20px; height:6px; }
+.progress-fill { background:linear-gradient(90deg,#C97080,#E8A0A8); border-radius:20px; height:6px; transition:width 0.4s ease; }
+
+/* Bottoni */
+.btn-next { display:inline-block; background:#C97080; color:white; padding:0.85rem 2.5rem; border-radius:30px; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; margin-top:1.3rem; transition:all 0.2s; font-family:'Lato',sans-serif; }
+.btn-next:hover { background:#B06070; transform:translateY(-1px); }
+.btn-next:disabled { background:#E8C0C8; cursor:not-allowed; transform:none; }
+.btn-back { background:none; border:1.5px solid #F5D5D9; color:#8C7070; padding:0.6rem 1.5rem; border-radius:30px; font-size:0.85rem; cursor:pointer; margin-top:1rem; margin-right:0.8rem; font-family:'Lato',sans-serif; }
+.btn-back:hover { border-color:#C97080; color:#C97080; }
+
+/* RISULTATI */
+#risultati { display:none; }
+.risultati-header { text-align:center; padding:2rem 1rem 1.5rem; background:white; border-radius:16px; border:1px solid #F5D5D9; margin-bottom:1.2rem; }
+.risultati-header .emoji-big { font-size:3rem; display:block; margin-bottom:0.8rem; }
+.risultati-header h2 { font-family:'Playfair Display',serif; font-size:1.5rem; color:#3D2B2B; margin-bottom:0.5rem; }
+.risultati-header p { font-size:0.9rem; color:#8C7070; }
+
+.bonus-grid { display:flex; flex-direction:column; gap:0.8rem; margin-bottom:1.5rem; }
+.bonus-card { background:white; border-radius:14px; padding:1.2rem 1.4rem; border:1px solid #F5D5D9; border-left:4px solid #C97080; }
+.bonus-card.verde { border-left-color:#7A9E7E; }
+.bonus-card.giallo { border-left-color:#C4A882; }
+.bonus-card .bonus-top { display:flex; align-items:center; gap:0.8rem; margin-bottom:0.4rem; }
+.bonus-card .bonus-icon { font-size:1.4rem; }
+.bonus-card .bonus-nome { font-family:'Playfair Display',serif; font-size:1rem; color:#3D2B2B; font-weight:600; }
+.bonus-card .bonus-badge { font-size:0.68rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:2px 8px; border-radius:10px; margin-left:auto; }
+.bonus-card .bonus-badge.rosa { background:#FBF0F1; color:#C97080; }
+.bonus-card .bonus-badge.verde { background:#EDF5EE; color:#7A9E7E; }
+.bonus-card .bonus-desc { font-size:0.85rem; color:#8C7070; line-height:1.6; }
+
+.nota-box { background:#FBF0F1; border-radius:12px; padding:1rem 1.2rem; margin-bottom:1.2rem; }
+.nota-box p { font-size:0.82rem; color:#8C7070; line-height:1.7; font-style:italic; }
+
+.cta-risultati { background:linear-gradient(135deg,#C97080,#E8A0A8); border-radius:18px; padding:2rem; text-align:center; margin-bottom:1.5rem; }
+.cta-risultati h3 { font-family:'Playfair Display',serif; font-size:1.3rem; color:white; margin-bottom:0.6rem; }
+.cta-risultati p { color:rgba(255,255,255,0.88); font-size:0.88rem; margin-bottom:1.2rem; line-height:1.7; }
+.cta-risultati a { display:inline-block; background:white; color:#C97080; padding:0.85rem 2rem; border-radius:30px; font-size:0.92rem; font-weight:700; text-decoration:none; }
+
+.btn-ricomincia { display:block; text-align:center; margin:1rem auto 0; background:none; border:1.5px solid #F5D5D9; color:#8C7070; padding:0.7rem 2rem; border-radius:30px; font-size:0.85rem; cursor:pointer; font-family:'Lato',sans-serif; }
+.btn-ricomincia:hover { border-color:#C97080; color:#C97080; }
+
+.disclaimer { font-size:0.76rem; color:#8C7070; font-style:italic; text-align:center; padding:1rem; line-height:1.7; }
+
+footer { background:#3D2B2B; color:rgba(255,255,255,0.5); padding:1.5rem 2rem; text-align:center; font-size:0.8rem; }
+footer a { color:#E8A0A8; text-decoration:none; }
+
+@media(max-width:600px) {
+  .calc-wrap { padding:1.5rem 1rem 3rem; }
+  .step { padding:1.4rem; }
+  .hero { padding:2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="header">
+  <a href="https://universomamma.github.io/" class="logo">Universo Mamma</a>
+  <a href="https://universomamma.github.io/" class="back">← Torna al sito</a>
+</div>
+</header>
+
+<div class="hero">
+  <span class="cat">Diritti & INPS 2026</span>
+  <h1>Scopri i bonus a cui potresti<br><em>avere diritto</em></h1>
+  <p>Rispondi a 5 domande e scopri subito quali agevolazioni potrebbero spettarti. Stima orientativa gratuita.</p>
+</div>
+
+<main>
+<div class="calc-wrap">
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="step-label">Domanda 1 di 5</span>
+      <span id="step-pct">20%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:20%"></div></div>
+  </div>
+
+  <!-- STEP 1: Situazione lavorativa -->
+  <div class="step active" id="step1">
+    <span class="step-num">Domanda 1 di 5</span>
+    <h2>Qual è la tua situazione lavorativa?</h2>
+    <div class="options">
+      <label class="option">
+        <input type="radio" name="lavoro" value="dipendente">
+        <span class="opt-icon">💼</span>
+        <span class="opt-text"><strong>Lavoratrice dipendente</strong><span>Contratto a tempo determinato o indeterminato</span></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="lavoro" value="autonoma">
+        <span class="opt-icon">🧾</span>
+        <span class="opt-text"><strong>Lavoratrice autonoma / libera professionista</strong><span>Partita IVA, collaboratrice, artigiana, commerciante</span></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="lavoro" value="disoccupata">
+        <span class="opt-icon">🏠</span>
+        <span class="opt-text"><strong>Disoccupata o non lavoro</strong><span>Incluse mamme in cerca di lavoro o casalinghe</span></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="lavoro" value="mista">
+        <span class="opt-icon">🔄</span>
+        <span class="opt-text"><strong>Situazione mista</strong><span>Es. ho perso il lavoro di recente, ho un contratto discontinuo</span></span>
+      </label>
+    </div>
+    <div>
+      <button class="btn-next" onclick="nextStep(1)" id="btn1" disabled>Avanti →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Fase della maternità -->
+  <div class="step" id="step2">
+    <span class="step-num">Domanda 2 di 5</span>
+    <h2>In che fase ti trovi?</h2>
+    <div class="options">
+      <label class="option">
+        <input type="radio" name="fase" value="incinta">
+        <span class="opt-icon">🤰</span>
+        <span class="opt-text"><strong>Sono incinta</strong><span>Gravidanza in corso</span></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="fase" value="neonato">
+        <span class="opt-icon">👶</span>
+        <span class="opt-text"><strong>Ho appena partorito</strong><span>Il bambino ha meno di 12 mesi</span></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="fase" value="bambino_piccolo">
+        <span class="opt-icon">🌱</span>
+        <span class="opt-text"><strong>Ho un bambino tra 1 e 3 anni</strong></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="fase" value="figlio_grande">
+        <span class="opt-icon">👧</span>
+        <span class="opt-text"><strong>Ho un figlio più grande (3-21 anni)</strong></span>
+      </label>
+    </div>
+    <div>
+      <button class="btn-back" onclick="prevStep(2)">← Indietro</button>
+      <button class="btn-next" onclick="nextStep(2)" id="btn2" disabled>Avanti →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Numero di figli -->
+  <div class="step" id="step3">
+    <span class="step-num">Domanda 3 di 5</span>
+    <h2>Quanti figli hai (incluso quello in arrivo)?</h2>
+    <div class="options">
+      <label class="option">
+        <input type="radio" name="figli" value="1">
+        <span class="opt-icon">1️⃣</span>
+        <span class="opt-text"><strong>Un figlio</strong></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="figli" value="2">
+        <span class="opt-icon">2️⃣</span>
+        <span class="opt-text"><strong>Due figli</strong></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="figli" value="3+">
+        <span class="opt-icon">👨‍👩‍👧‍👦</span>
+        <span class="opt-text"><strong>Tre o più figli</strong><span>Famiglia numerosa — ci sono agevolazioni extra</span></span>
+      </label>
+    </div>
+    <div>
+      <button class="btn-back" onclick="prevStep(3)">← Indietro</button>
+      <button class="btn-next" onclick="nextStep(3)" id="btn3" disabled>Avanti →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: ISEE -->
+  <div class="step" id="step4">
+    <span class="step-num">Domanda 4 di 5</span>
+    <h2>Hai un ISEE familiare aggiornato?</h2>
+    <div class="options">
+      <label class="option">
+        <input type="radio" name="isee" value="basso">
+        <span class="opt-icon">📋</span>
+        <span class="opt-text"><strong>Sì, sotto i 25.000 €</strong><span>Accedi agli importi più alti</span></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="isee" value="medio">
+        <span class="opt-icon">📋</span>
+        <span class="opt-text"><strong>Sì, tra 25.000 e 45.000 €</strong></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="isee" value="alto">
+        <span class="opt-icon">📋</span>
+        <span class="opt-text"><strong>Sì, sopra i 45.000 €</strong></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="isee" value="no">
+        <span class="opt-icon">❓</span>
+        <span class="opt-text"><strong>Non ho l'ISEE / non lo so</strong><span>Puoi comunque accedere a importi minimi</span></span>
+      </label>
+    </div>
+    <div>
+      <button class="btn-back" onclick="prevStep(4)">← Indietro</button>
+      <button class="btn-next" onclick="nextStep(4)" id="btn4" disabled>Avanti →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Asilo nido -->
+  <div class="step" id="step5">
+    <span class="step-num">Domanda 5 di 5</span>
+    <h2>Il tuo bambino frequenta (o frequenterà) l'asilo nido?</h2>
+    <div class="options">
+      <label class="option">
+        <input type="radio" name="nido" value="si">
+        <span class="opt-icon">🏫</span>
+        <span class="opt-text"><strong>Sì, frequenta o frequenterà il nido</strong></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="nido" value="no">
+        <span class="opt-icon">🏠</span>
+        <span class="opt-text"><strong>No, resto a casa o con un familiare</strong></span>
+      </label>
+      <label class="option">
+        <input type="radio" name="nido" value="forse">
+        <span class="opt-icon">🤔</span>
+        <span class="opt-text"><strong>Non ancora deciso</strong></span>
+      </label>
+    </div>
+    <div>
+      <button class="btn-back" onclick="prevStep(5)">← Indietro</button>
+      <button class="btn-next" onclick="mostraRisultati()" id="btn5" disabled>Scopri i tuoi bonus →</button>
+    </div>
+  </div>
+
+  <!-- RISULTATI -->
+  <div id="risultati">
+    <div class="risultati-header">
+      <span class="emoji-big">🎁</span>
+      <h2 id="risultati-title">Ecco i bonus che potrebbero spettarti</h2>
+      <p>In base alle tue risposte, abbiamo identificato le seguenti agevolazioni. Verifica sempre con un patronato o CAF per la tua situazione specifica.</p>
+    </div>
+
+    <div class="bonus-grid" id="bonus-list"></div>
+
+    <div class="nota-box">
+      <p>⚠️ Questi risultati sono una <strong>stima orientativa</strong>, non un calcolo ufficiale INPS. Gli importi e le condizioni possono variare. Per una verifica completa della tua situazione, rivolgiti sempre a un CAF o patronato (gratuiti) o consulta inps.it.</p>
+    </div>
+
+    <div class="cta-risultati">
+      <h3>Vuoi approfondire ogni bonus?</h3>
+      <p>Il Kit Completo ti guida passo dopo passo nelle pratiche INPS, con checklist, documenti necessari e scadenze da non perdere.</p>
+      <a href="https://universomamma.gumroad.com/l/xbfvhi">Scopri il Kit Completo →</a>
+    </div>
+
+    <button class="btn-ricomincia" onclick="ricomincia()">↩ Ricomincia il calcolatore</button>
+
+    <p class="disclaimer">Universo Mamma non è un ente ufficiale INPS. Questo strumento ha scopo puramente informativo e orientativo. Le normative possono variare nel tempo.</p>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <p>© 2026 <a href="https://universomamma.github.io/">Universo Mamma</a> — Guide ed ebook per la maternità</p>
+</footer>
+
+<script>
+// ============================================================
+// DATABASE BONUS
+// ============================================================
+const tuttiBonus = [
+  {
+    id: 'assegno_unico',
+    nome: 'Assegno Unico Universale',
+    icon: '💰',
+    colore: 'verde',
+    badge: 'Principale',
+    badge_colore: 'verde',
+    desc: 'Il contributo mensile più importante per le famiglie con figli. Spetta praticamente a tutte le mamme, con importi che variano in base all\'ISEE.',
+    condizioni: () => true // sempre
+  },
+  {
+    id: 'congedo_maternita',
+    nome: 'Congedo di Maternità Obbligatorio',
+    icon: '🤱',
+    colore: '',
+    badge: 'Importante',
+    badge_colore: 'rosa',
+    desc: '5 mesi di astensione obbligatoria dal lavoro, retribuiti in percentuale. Spetta alle lavoratrici dipendenti e autonome con contributi versati.',
+    condizioni: (r) => r.lavoro !== 'disoccupata' && (r.fase === 'incinta' || r.fase === 'neonato')
+  },
+  {
+    id: 'congedo_parentale',
+    nome: 'Congedo Parentale',
+    icon: '👨‍👩‍👶',
+    colore: '',
+    badge: 'Importante',
+    badge_colore: 'rosa',
+    desc: 'Periodo aggiuntivo di astensione facoltativa dopo il congedo obbligatorio. Dal 2024 i primi 3 mesi sono retribuiti all\'80% per le lavoratrici dipendenti.',
+    condizioni: (r) => r.lavoro !== 'disoccupata' && (r.fase === 'incinta' || r.fase === 'neonato' || r.fase === 'bambino_piccolo')
+  },
+  {
+    id: 'bonus_nido',
+    nome: 'Bonus Asilo Nido',
+    icon: '🏫',
+    colore: 'verde',
+    badge: 'Rimborso rette',
+    badge_colore: 'verde',
+    desc: 'Rimborso sulle rette dell\'asilo nido, fino a 3.000 € annui. Va richiesto ogni anno presentando le ricevute delle rette pagate.',
+    condizioni: (r) => r.nido === 'si' || r.nido === 'forse'
+  },
+  {
+    id: 'maternita_comuni',
+    nome: 'Assegno di Maternità dei Comuni',
+    icon: '🏛️',
+    colore: 'giallo',
+    badge: 'Verificare',
+    badge_colore: 'rosa',
+    desc: 'Per le mamme senza copertura INPS da lavoro. Erogato dal Comune di residenza, una tantum alla nascita o all\'adozione del bambino.',
+    condizioni: (r) => r.lavoro === 'disoccupata' || r.lavoro === 'mista'
+  },
+  {
+    id: 'esenzione_ticket',
+    nome: 'Esenzione Ticket Sanitario',
+    icon: '🏥',
+    colore: 'verde',
+    badge: 'Gratuito',
+    badge_colore: 'verde',
+    desc: 'Esenzione dal pagamento del ticket per visite ed esami durante la gravidanza e fino a 1 anno di vita del bambino.',
+    condizioni: (r) => r.fase === 'incinta' || r.fase === 'neonato'
+  },
+  {
+    id: 'bonus_bebè',
+    nome: 'Bonus Bebè (Assegno Natalità)',
+    icon: '🍼',
+    colore: '',
+    badge: 'Prima infanzia',
+    badge_colore: 'rosa',
+    desc: 'Contributo mensile per i nati o adottati. L\'importo varia in base all\'ISEE familiare. Verifica disponibilità per l\'anno in corso.',
+    condizioni: (r) => r.fase === 'neonato' || r.fase === 'bambino_piccolo'
+  },
+  {
+    id: 'permessi_allattamento',
+    nome: 'Permessi per Allattamento',
+    icon: '🤱',
+    colore: 'giallo',
+    badge: 'Lavoro',
+    badge_colore: 'rosa',
+    desc: 'Fino al compimento di 1 anno del bambino, le lavoratrici dipendenti hanno diritto a 2 ore al giorno di permesso retribuito (1 ora se turni < 6 ore).',
+    condizioni: (r) => r.lavoro === 'dipendente' && r.fase === 'neonato'
+  },
+  {
+    id: 'tutela_licenziamento',
+    nome: 'Tutela dal Licenziamento',
+    icon: '🛡️',
+    colore: 'verde',
+    badge: 'Diritto',
+    badge_colore: 'verde',
+    desc: 'Divieto assoluto di licenziamento durante la gravidanza e fino al compimento di 1 anno del bambino. Si applica anche alle dimissioni volontarie (richiedono convalida).',
+    condizioni: (r) => r.lavoro === 'dipendente' && (r.fase === 'incinta' || r.fase === 'neonato')
+  },
+  {
+    id: 'assegno_familiare',
+    nome: 'Assegno per il Nucleo Familiare (ANF)',
+    icon: '👨‍👩‍👧',
+    colore: 'giallo',
+    badge: 'Reddito basso',
+    badge_colore: 'rosa',
+    desc: 'Integrazione al reddito per lavoratori dipendenti con nucleo familiare e reddito complessivo basso. Da verificare in base al reddito specifico.',
+    condizioni: (r) => r.lavoro === 'dipendente' && (r.isee === 'basso' || r.isee === 'medio')
+  },
+  {
+    id: 'maggiorazione_assegno_unico',
+    nome: 'Maggiorazione Assegno Unico (Famiglie Numerose)',
+    icon: '👨‍👩‍👧‍👦',
+    colore: 'verde',
+    badge: 'Famiglie numerose',
+    badge_colore: 'verde',
+    desc: 'Le famiglie con 3 o più figli ricevono una maggiorazione sull\'Assegno Unico per ogni figlio a partire dal terzo.',
+    condizioni: (r) => r.figli === '3+'
+  },
+  {
+    id: 'detrazioni_figli',
+    nome: 'Detrazioni Fiscali per Figli a Carico',
+    icon: '📊',
+    colore: 'giallo',
+    badge: '730/IRPEF',
+    badge_colore: 'rosa',
+    desc: 'Detrazioni nella dichiarazione dei redditi per i figli a carico. Complementari all\'Assegno Unico per alcune categorie.',
+    condizioni: (r) => r.lavoro !== 'disoccupata'
+  },
+  {
+    id: 'fondo_maternita',
+    nome: 'Indennità Maternità INPS (Lavoratrici Autonome)',
+    icon: '🧾',
+    colore: '',
+    badge: 'Autonome',
+    badge_colore: 'rosa',
+    desc: 'Le lavoratrici autonome e le libere professioniste iscritte a gestioni INPS hanno diritto a un\'indennità di maternità calcolata sui redditi degli anni precedenti.',
+    condizioni: (r) => r.lavoro === 'autonoma' && (r.fase === 'incinta' || r.fase === 'neonato')
+  },
+  {
+    id: 'reddito_maternita_disoccupate',
+    nome: 'Indennità di Maternità per Disoccupate/Precarie',
+    icon: '💛',
+    colore: 'giallo',
+    badge: 'Verificare',
+    badge_colore: 'rosa',
+    desc: 'Anche senza un contratto attivo, alcune lavoratrici con contributi versati in passato possono avere diritto a un\'indennità di maternità. Verifica i requisiti INPS.',
+    condizioni: (r) => (r.lavoro === 'disoccupata' || r.lavoro === 'mista') && (r.fase === 'incinta' || r.fase === 'neonato')
+  },
+  {
+    id: 'agevolazioni_isee_basso',
+    nome: 'Agevolazioni per ISEE Basso (Mensa, Trasporti, Servizi)',
+    icon: '🎟️',
+    colore: 'verde',
+    badge: 'ISEE < 25.000',
+    badge_colore: 'verde',
+    desc: 'Con ISEE basso puoi accedere a sconti o gratuità su mensa scolastica, trasporti, libri di testo e altri servizi comunali per i figli.',
+    condizioni: (r) => r.isee === 'basso'
+  },
+];
+
+// ============================================================
+// LOGICA STEP
+// ============================================================
+let risposte = {};
+let currentStep = 1;
+const totalSteps = 5;
+const fieldMap = { 1:'lavoro', 2:'fase', 3:'figli', 4:'isee', 5:'nido' };
+
+// Listen for radio changes
+document.querySelectorAll('input[type=radio]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    const step = parseInt(this.closest('.step').id.replace('step',''));
+    risposte[fieldMap[step]] = this.value;
+    
+    // Update visual selection
+    this.closest('.options').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    this.closest('.option').classList.add('selected');
+    
+    // Enable next button
+    document.getElementById('btn' + step).disabled = false;
+  });
+});
+
+function updateProgress(step) {
+  const pct = Math.round((step / totalSteps) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('step-label').textContent = `Domanda ${step} di ${totalSteps}`;
+  document.getElementById('step-pct').textContent = pct + '%';
+}
+
+function nextStep(from) {
+  document.getElementById('step' + from).classList.remove('active');
+  currentStep = from + 1;
+  if (currentStep <= totalSteps) {
+    document.getElementById('step' + currentStep).classList.add('active');
+    updateProgress(currentStep);
+  }
+}
+
+function prevStep(from) {
+  document.getElementById('step' + from).classList.remove('active');
+  currentStep = from - 1;
+  document.getElementById('step' + currentStep).classList.add('active');
+  updateProgress(currentStep);
+}
+
+function mostraRisultati() {
+  document.getElementById('step5').classList.remove('active');
+  document.getElementById('progress-wrap') && null;
+  document.querySelector('.progress-wrap').style.display = 'none';
+
+  const bonusTrovati = tuttiBonus.filter(b => b.condizioni(risposte));
+
+  const list = document.getElementById('bonus-list');
+  list.innerHTML = '';
+
+  bonusTrovati.forEach(b => {
+    const card = document.createElement('div');
+    card.className = 'bonus-card ' + b.colore;
+    card.innerHTML = `
+      <div class="bonus-top">
+        <span class="bonus-icon">${b.icon}</span>
+        <span class="bonus-nome">${b.nome}</span>
+        <span class="bonus-badge ${b.badge_colore}">${b.badge}</span>
+      </div>
+      <p class="bonus-desc">${b.desc}</p>
+    `;
+    list.appendChild(card);
+  });
+
+  const title = document.getElementById('risultati-title');
+  title.textContent = `Hai trovato ${bonusTrovati.length} possibili agevolazioni`;
+
+  document.getElementById('risultati').style.display = 'block';
+  document.getElementById('risultati').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function ricomincia() {
+  risposte = {};
+  currentStep = 1;
+
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('risultati').style.display = 'none';
+  document.querySelector('.progress-wrap').style.display = 'block';
+  updateProgress(1);
+
+  // Reset radio buttons
+  document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('[id^=btn]').forEach(b => b.disabled = true);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calcolatore Bonus Mamma 2026",
+  "description": "Strumento orientativo gratuito per scoprire quali bonus INPS potrebbero spettare alle mamme italiane.",
+  "url": "https://universomamma.github.io/calcolatore-bonus-mamma.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "publisher": { "@type": "Organization", "name": "Universo Mamma" }
+}
+</script>
+
+</body>
+</html>
