@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quanto conosci la tua finestra fertile? — Universo Mamma</title>
+<meta name="description" content="Test gratuito: rispondi a 8 domande e scopri quanto conosci davvero i segnali del tuo ciclo. Universo Mamma.">
+<link rel="canonical" href="https://universomamma.github.io/test-finestra-fertile.html">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:     #FDF8F3;
+  --rose-pale: #FBF0F1;
+  --rose-soft: #F5D5D9;
+  --rose:      #C97080;
+  --rose-deep: #A85A6A;
+  --stone:     #3D2B2B;
+  --stone-mid: #7A6060;
+  --stone-light: #B0A0A0;
+  --border:    #EDE3E3;
+  --sage:      #7A9E7E;
+  --sage-pale: #EDF5EE;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--cream);
+  color: var(--stone);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+.header {
+  padding: 1.2rem 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.header a {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--rose);
+  text-decoration: none;
+}
+
+/* SCREEN SYSTEM */
+.screen { display: none !important; }
+.screen.active { display: block !important; }
+
+/* ── INTRO ── */
+#screen-intro {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 2rem;
+  text-align: center;
+}
+.intro-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rose);
+  display: block;
+  margin-bottom: 1rem;
+}
+.intro-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.7rem, 6vw, 2.4rem);
+  font-weight: 700;
+  color: var(--stone);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.intro-sub {
+  font-size: 1rem;
+  color: var(--stone-mid);
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+.intro-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.intro-meta span {
+  font-size: 0.8rem;
+  color: var(--stone-light);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ── QUIZ ── */
+#screen-quiz {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.5rem 1.2rem 2rem;
+}
+
+/* Progress */
+.progress-wrap { margin-bottom: 1.5rem; }
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--stone-mid);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.progress-bar {
+  background: var(--rose-soft);
+  border-radius: 20px;
+  height: 5px;
+}
+.progress-fill {
+  background: linear-gradient(90deg, var(--rose), #E8A0A8);
+  border-radius: 20px;
+  height: 5px;
+  transition: width 0.4s ease;
+}
+
+/* Question card */
+.q-card {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  padding: 2rem 1.6rem 1.8rem;
+  margin-bottom: 1rem;
+}
+.q-number {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rose);
+  display: block;
+  margin-bottom: 0.8rem;
+}
+.q-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--stone);
+  line-height: 1.35;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* Answer options */
+.options { display: flex; flex-direction: column; gap: 0.7rem; }
+.option-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.93rem;
+  font-weight: 400;
+  color: var(--stone);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s;
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+}
+.option-btn:hover { border-color: var(--rose-soft); background: var(--rose-pale); }
+.option-btn.selected {
+  border-color: var(--rose);
+  background: var(--rose-pale);
+  color: var(--stone);
+  font-weight: 700;
+}
+
+/* Next button */
+.btn-next {
+  display: block;
+  width: 100%;
+  padding: 1.1rem;
+  background: var(--rose);
+  color: white;
+  border: none;
+  border-radius: 40px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  opacity: 0.4;
+  margin-top: 0.5rem;
+}
+.btn-next:not([disabled]) { opacity: 1; }
+.btn-next:not([disabled]):hover { background: var(--rose-deep); transform: translateY(-1px); }
+
+/* ── RESULTS ── */
+#screen-results {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 2rem 1.2rem 3rem;
+  text-align: center;
+}
+.result-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rose);
+  display: block;
+  margin-bottom: 0.8rem;
+}
+.result-score {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--rose);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.result-score-label {
+  font-size: 0.8rem;
+  color: var(--stone-light);
+  margin-bottom: 1.5rem;
+}
+.result-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--stone);
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.result-desc {
+  font-size: 0.95rem;
+  color: var(--stone-mid);
+  line-height: 1.75;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.result-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.8rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* CTA button */
+.btn-cta {
+  display: block;
+  width: 100%;
+  padding: 1.1rem;
+  background: var(--rose);
+  color: white;
+  border: none;
+  border-radius: 40px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 0.8rem;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-cta:hover { background: var(--rose-deep); transform: translateY(-1px); }
+
+/* Retry button */
+.btn-retry {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: transparent;
+  color: var(--stone-mid);
+  border: 1.5px solid var(--border);
+  border-radius: 40px;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-retry:hover { border-color: var(--rose-soft); color: var(--rose); background: var(--rose-pale); }
+
+/* Dots indicator */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--rose-soft);
+  transition: background 0.2s;
+}
+.dot.done { background: var(--rose); }
+.dot.current { background: var(--rose); transform: scale(1.4); }
+
+/* FOOTER */
+.footer {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.74rem;
+  color: var(--stone-light);
+  line-height: 1.7;
+  text-align: center;
+}
+.footer a { color: var(--rose); text-decoration: none; }
+
+@media (min-width: 600px) {
+  #screen-intro, #screen-quiz, #screen-results { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .q-card { padding: 2.4rem 2rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a href="https://universomamma.github.io/">Universo Mamma</a>
+</header>
+
+<!-- ── INTRO ── -->
+<div id="screen-intro" class="screen active">
+  <span class="intro-label">Test gratuito</span>
+  <h1 class="intro-title">Quanto conosci davvero la tua finestra fertile?</h1>
+  <p class="intro-sub">Rispondi a 8 domande e scopri quanto conosci davvero i segnali del tuo ciclo.</p>
+  <div class="intro-meta">
+    <span>🌸 8 domande</span>
+    <span>⏱ 2 minuti</span>
+    <span>✦ Gratuito</span>
+  </div>
+  <button class="btn-next" style="opacity:1;" onclick="startQuiz()">Inizia il test →</button>
+</div>
+
+<!-- ── QUIZ ── -->
+<div id="screen-quiz" class="screen">
+
+  <!-- Dots -->
+  <div class="dots" id="dots"></div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-top">
+      <span id="progress-label">Domanda 1 di 8</span>
+      <span id="progress-pct">12%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:12%"></div>
+    </div>
+  </div>
+
+  <!-- Question -->
+  <div class="q-card">
+    <span class="q-number" id="q-number">Domanda 1 di 8</span>
+    <p class="q-text" id="q-text"></p>
+    <div class="options" id="options"></div>
+  </div>
+
+  <button class="btn-next" id="btn-next" disabled onclick="nextQuestion()">Avanti →</button>
+</div>
+
+<!-- ── RESULTS ── -->
+<div id="screen-results" class="screen">
+  <span class="result-label">Il tuo risultato</span>
+  <div class="result-score" id="result-score"></div>
+  <div class="result-score-label" id="result-score-label"></div>
+  <div class="result-card">
+    <h2 class="result-title" id="result-title"></h2>
+    <p class="result-desc" id="result-desc"></p>
+    <a id="result-cta" href="#" class="btn-cta" target="_blank" rel="noopener"></a>
+  </div>
+  <button class="btn-retry" onclick="resetQuiz()">↩ Rifai il test</button>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <p>Questo test ha finalità esclusivamente informative e non sostituisce il parere del medico. Il risultato riguarda la conoscenza e l'osservazione del ciclo e non costituisce una valutazione della fertilità individuale.</p>
+  <p style="margin-top:0.8rem;">© 2026 <a href="https://universomamma.github.io/">Universo Mamma</a></p>
+</footer>
+
+<script>
+// ── DOMANDE ──
+const questions = [
+  {
+    text: "Sai mediamente quanto dura il tuo ciclo?",
+    options: [
+      { label: "Sì, abbastanza bene", points: 2 },
+      { label: "Più o meno", points: 1 },
+      { label: "No", points: 0 }
+    ]
+  },
+  {
+    text: "Sai che l'ovulazione non avviene necessariamente il 14° giorno?",
+    options: [
+      { label: "Sì", points: 2 },
+      { label: "Ne avevo sentito parlare", points: 1 },
+      { label: "No", points: 0 }
+    ]
+  },
+  {
+    text: "Quando cerchi di capire i tuoi giorni fertili, cosa osservi?",
+    options: [
+      { label: "Più segnali del mio corpo", points: 2 },
+      { label: "Principalmente app o calendario", points: 1 },
+      { label: "Non so cosa osservare", points: 0 }
+    ]
+  },
+  {
+    text: "Osservi le variazioni del muco cervicale?",
+    options: [
+      { label: "Sì, regolarmente", points: 2 },
+      { label: "Qualche volta", points: 1 },
+      { label: "No, o non so interpretarlo", points: 0 }
+    ]
+  },
+  {
+    text: "Utilizzi test di ovulazione LH?",
+    options: [
+      { label: "Sì e so interpretarli", points: 2 },
+      { label: "Li uso ma mi confondono", points: 1 },
+      { label: "No", points: 0 }
+    ]
+  },
+  {
+    text: "Misuri la temperatura basale?",
+    options: [
+      { label: "Sì", points: 2 },
+      { label: "Qualche volta", points: 1 },
+      { label: "No, o non so a cosa serva", points: 0 }
+    ]
+  },
+  {
+    text: "Se un'app indica "ovulazione oggi", quanto ti fidi?",
+    options: [
+      { label: "È solo una stima, osservo anche altri segnali", points: 2 },
+      { label: "Abbastanza", points: 1 },
+      { label: "Molto, mi baso soprattutto sull'app", points: 0 }
+    ]
+  },
+  {
+    text: "Riesci a riconoscere alcuni segnali che possono indicare l'avvicinarsi dell'ovulazione?",
+    options: [
+      { label: "Sì", points: 2 },
+      { label: "Solo alcuni", points: 1 },
+      { label: "No", points: 0 }
+    ]
+  }
+];
+
+// ── RISULTATI ──
+const results = [
+  {
+    range: [0, 5],
+    title: "Hai ancora diversi segnali da scoprire",
+    desc: "Probabilmente ti affidi soprattutto a date o previsioni. Il primo passo è imparare a osservare meglio ciò che succede durante il tuo ciclo — e ci sono più segnali di quanti immagini.",
+    cta: "Scopri i 5 segnali",
+    link: "https://universomamma.gumroad.com/l/finestrafertile"
+  },
+  {
+    range: [6, 11],
+    title: "Stai iniziando a leggere meglio il tuo ciclo",
+    desc: "Conosci già alcuni elementi, ma forse non li stai ancora collegando tra loro. Muco cervicale, test LH, temperatura basale e andamento del ciclo possono dare informazioni diverse e complementari.",
+    cta: "Scopri i 5 segnali",
+    link: "https://universomamma.gumroad.com/l/finestrafertile"
+  },
+  {
+    range: [12, 16],
+    title: "Conosci già molti segnali del tuo ciclo",
+    desc: "Hai già una buona base. Il passo successivo è organizzare le informazioni in modo più strutturato, per usarle con ancora più consapevolezza.",
+    cta: "Scopri il metodo completo",
+    link: "https://universomamma.gumroad.com/l/concepimentofertilita"
+  }
+];
+
+// ── STATE ──
+let current = 0;
+let score = 0;
+let selected = null;
+
+// ── INIT ──
+function startQuiz() {
+  current = 0;
+  score = 0;
+  selected = null;
+  showScreen('screen-quiz');
+  buildDots();
+  renderQuestion();
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  var el = document.getElementById(id);
+  el.classList.add('active');
+  el.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── DOTS ──
+function buildDots() {
+  const wrap = document.getElementById('dots');
+  wrap.innerHTML = '';
+  questions.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' current' : '');
+    d.id = 'dot-' + i;
+    wrap.appendChild(d);
+  });
+}
+
+function updateDots() {
+  questions.forEach((_, i) => {
+    const d = document.getElementById('dot-' + i);
+    if (i < current) d.className = 'dot done';
+    else if (i === current) d.className = 'dot current';
+    else d.className = 'dot';
+  });
+}
+
+// ── RENDER ──
+function renderQuestion() {
+  selected = null;
+  const q = questions[current];
+  const n = current + 1;
+  const total = questions.length;
+  const pct = Math.round(n / total * 100);
+
+  document.getElementById('q-number').textContent = 'Domanda ' + n + ' di ' + total;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('progress-label').textContent = 'Domanda ' + n + ' di ' + total;
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  const btn = document.getElementById('btn-next');
+  btn.disabled = true;
+  btn.textContent = current < questions.length - 1 ? 'Avanti →' : 'Vedi il risultato →';
+
+  const optWrap = document.getElementById('options');
+  optWrap.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const b = document.createElement('button');
+    b.className = 'option-btn';
+    b.textContent = opt.label;
+    b.setAttribute('aria-label', opt.label);
+    b.onclick = () => selectOption(i, opt.points, b);
+    optWrap.appendChild(b);
+  });
+
+  updateDots();
+}
+
+function selectOption(idx, points, el) {
+  // Deselect all
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selected = points;
+  const btn = document.getElementById('btn-next');
+  btn.disabled = false;
+}
+
+function nextQuestion() {
+  if (selected === null) return;
+  score += selected;
+
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+// ── RESULTS ──
+function showResults() {
+  showScreen('screen-results');
+
+  document.getElementById('result-score').textContent = score;
+  document.getElementById('result-score-label').textContent = 'punti su 16';
+
+  const r = results.find(r => score >= r.range[0] && score <= r.range[1]);
+
+  document.getElementById('result-title').textContent = r.title.toUpperCase();
+  document.getElementById('result-desc').textContent = r.desc;
+
+  const cta = document.getElementById('result-cta');
+  cta.textContent = r.cta.toUpperCase();
+  cta.href = r.link;
+}
+
+// ── RESET ──
+function resetQuiz() {
+  current = 0;
+  score = 0;
+  selected = null;
+  showScreen('screen-intro');
+}
+</script>
+
+</body>
+</html>
