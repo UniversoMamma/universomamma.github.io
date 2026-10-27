@@ -1169,6 +1169,18 @@
     document.body.style.overflow = '';
     apriBlog();
   }
+  function apriBlog() {
+    document.getElementById('blog-overlay').style.display = 'block';
+    document.getElementById('blog-back').style.display = 'block';
+    window.scrollTo(0,0);
+    document.body.style.overflow = 'hidden';
+  }
+  function chiudiBlog(callback) {
+    document.getElementById('blog-overlay').style.display = 'none';
+    document.getElementById('blog-back').style.display = 'none';
+    document.body.style.overflow = '';
+    if (callback) setTimeout(callback, 50);
+  }
 </script>
 
 </body>
