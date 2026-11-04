@@ -1,0 +1,13 @@
+{
+  "sitemap_urls": 23,
+  "local_targets_served_http_200": 41,
+  "inline_js_syntax_checks": 5,
+  "errors": [],
+  "home_html_before_bytes": 3773116,
+  "home_html_after_bytes": 66360,
+  "optimized_image_bytes": 424794,
+  "browser_visual_test": "unavailable: browser download failed",
+  "unlinked_product_apps": "checklist.html and planner.html excluded from public sitemap audit; unchanged",
+  "mit_status": "informational page 503; official portal available; contextual fallback added",
+  "legal_status": "real contact links replace broken placeholders; complete owner-approved legal policies not supplied"
+}
